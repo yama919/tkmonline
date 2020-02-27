@@ -79,6 +79,7 @@ Game.onLoad = function () {
         , 'view/prize.png'
         , 'view/dice.png'
         , 'view/signpost.png'
+        , 'view/resource-name.png'
     );
 
     this.core.onload = function () {
@@ -1582,12 +1583,15 @@ Game.addStock = function (game) {
     for (i = 0; i < len1; i++) {
         if (game.resourceStock[i] > 0) {
             var sprite = new Sprite(48, 38);
+            this.addSprite('view/resource-name.png', i, i * 51 + 106, 10, 15, 20);
 
             sprite.y = 30;
             sprite.x = i * 51 + 90;
             sprite.image = new Surface(48, 38);
             sprite.image.context.fillStyle = 'rgb(255,255,255)';
             sprite.image.context.fillRect(0, 0, 48, 38);
+
+            
             
             switch (i) {
                 case Resource.BRICK:
