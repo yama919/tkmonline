@@ -426,7 +426,8 @@ Game.addDomesticTrade1Command = function (game) {
         }());
     }
     
-    this.addSprite('view/button.png', 14, 520, 470, 80, 25, function () {
+    this.addLabel(game.playerList[0].uid, 520, 460);
+    this.addSprite('view/button.png', 14, 520, 475, 80, 25, function () {
         if (game.active !== 0) {
             return function () {
                 Game.send('v0 ' + Game.trade.input.join(' ') + ' ' + Game.trade.output.join(' '));
@@ -434,7 +435,8 @@ Game.addDomesticTrade1Command = function (game) {
         }
     }());
     
-    this.addSprite('view/button.png', 15, 610, 470, 80, 25, function () {
+    this.addLabel(game.playerList[1].uid, 610, 460);
+    this.addSprite('view/button.png', 15, 610, 475, 80, 25, function () {
         if (game.active !== 1) {
             return function () {
                 Game.send('v1 ' + Game.trade.input.join(' ') + ' ' + Game.trade.output.join(' '));
@@ -442,7 +444,8 @@ Game.addDomesticTrade1Command = function (game) {
         }
     }());
     
-    this.addSprite('view/button.png', 16, 700, 470, 80, 25, function () {
+    this.addLabel(game.playerList[2].uid, 700, 460);
+    this.addSprite('view/button.png', 16, 700, 475, 80, 25, function () {
         if (game.active !== 2) {
             return function () {
                 Game.send('v2 ' + Game.trade.input.join(' ') + ' ' + Game.trade.output.join(' '));
@@ -451,7 +454,8 @@ Game.addDomesticTrade1Command = function (game) {
     }());
     
     if (game.playerSize === 4) {
-        this.addSprite('view/button.png', 17, 520, 500, 80, 25, function () {
+        this.addLabel(game.playerList[3].uid, 520, 500);
+        this.addSprite('view/button.png', 17, 520, 515, 80, 25, function () {
             if (game.active !== 3) {
                 return function () {
                     Game.send('v3 ' + Game.trade.input.join(' ') + ' ' + Game.trade.output.join(' '));
@@ -460,7 +464,7 @@ Game.addDomesticTrade1Command = function (game) {
         }());
     }
     
-    this.addSprite('view/button.png', 13, 610, 500, 80, 25, function () {
+    this.addSprite('view/button.png', 13, 610, 515, 80, 25, function () {
         Game.send('e');
     });
 }
