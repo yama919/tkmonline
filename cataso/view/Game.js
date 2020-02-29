@@ -1606,6 +1606,7 @@ Game.addStock = function (game) {
         if (game.resourceStock[i] > 0) {
             var sprite = new Sprite(48, 38);
             this.addSprite('view/resource-name.png', i, i * 51 + 106, 10, 15, 20);
+            this.addLabel(String(19-game.resourceStock[i]), i * 51 + 108, 70);
 
             sprite.y = 30;
             sprite.x = i * 51 + 90;
@@ -1650,6 +1651,7 @@ Game.addStock = function (game) {
         sprite.image.context.fillStyle = 'rgb(0,0,0)';
         sprite.image.context.fillRect(0, 50 - game.cardStock.length * 2, 48, game.cardStock.length * 2);
         sprite.image.context.strokeRect(0, 0, 48, 50);
+        this.addLabel(String(game.cardStock.length), 375, 70);
 
         this.core.rootScene.addChild(sprite);
     }
