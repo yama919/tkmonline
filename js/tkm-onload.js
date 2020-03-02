@@ -96,6 +96,9 @@ window.onload = function () {
         document.getElementById('play-button-bell').onclick = function () {
             Tkm.send('e');
         }
+        document.getElementById('kishi-tobasu').onclick = function () {
+            Tkm.send('c' + '手出したら騎士飛ばす');
+        }
 
         document.getElementById('play-select-volume').selectedIndex = 2;
 
