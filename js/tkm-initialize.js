@@ -16,7 +16,7 @@ Tkm.Sound.PASS = 8;
 Tkm.Sound.ROBBER = 9;
 
 Tkm.view = null;
-Tkm.wsurl = 'wss://35.212.137.6';
+Tkm.wsurl = 'wss://35.247.57.49';
 Tkm.ws = null;
 Tkm.roomIndex = null;
 Tkm.userList = [];
