@@ -16,7 +16,7 @@ Tkm.Sound.PASS = 8;
 Tkm.Sound.ROBBER = 9;
 
 Tkm.view = null;
-Tkm.wsurl = 'ws://35.247.57.49:5000';
+Tkm.wsurl = 'wss://pure-dusk-5665.herokuapp.com';
 Tkm.ws = null;
 Tkm.roomIndex = null;
 Tkm.userList = [];
