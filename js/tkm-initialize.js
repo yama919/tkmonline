@@ -16,7 +16,7 @@ Tkm.Sound.PASS = 8;
 Tkm.Sound.ROBBER = 9;
 
 Tkm.view = null;
-Tkm.wsurl = 'wss://35.247.57.49';
+Tkm.wsurl = 'wss://cataso.omatz.cf';
 Tkm.ws = null;
 Tkm.roomIndex = null;
 Tkm.userList = [];
