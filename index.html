@@ -223,8 +223,9 @@
 </div>
 
 <script>
+    // var ws = new WebSocket('ws://localhost:5000');
     var ws = new WebSocket('wss://cataso.omatz.cf');
-
+    
     ws.onopen = function () {
         ws.send(String.fromCharCode(100));
 

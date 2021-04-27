@@ -114,6 +114,14 @@ Game.onMessage = function (game) {
     this.addSprite('view/resource.png',1,54+390,520,15,15);
     this.addSprite('view/resource.png',2,70+390,520,15,15);
     this.addSprite('view/resource.png',3,86+390,520,15,15);
+    if(game.diceHistory && game.diceHistory.length  > 0) {
+        for(var diceNum = 2; diceNum <= 12; diceNum++) {
+            var diceStr = ( '00' + diceNum ).slice( -2 );
+            this.addLabel(diceStr + ':', 425, 15 + 15 * (diceNum - 2));
+            this.addLabel('' + ( '  ' + Math.round(game.diceHistory.filter(d => d === diceNum).length / game.diceHistory.length * 100) ).slice( -3 ), 450, 15 + 15 * (diceNum - 2));
+            this.addLabel('%', 475, 15 + 15 * (diceNum - 2));
+        }
+    }
     this.addSetupOption(game);
     this.addStock(game);
     this.addHeadLine(game);
