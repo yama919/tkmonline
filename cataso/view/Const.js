@@ -33,6 +33,7 @@ Phase.ROAD_BUILDING2 = 18;
 Phase.YEAR_OF_PLENTY1 = 19;
 Phase.YEAR_OF_PLENTY2 = 20;
 Phase.MONOPOLY = 21;
+Phase.DOMESTIC_TRADE3 = 22;
 
 Land = function () { }
 Land.DESERT = -1;

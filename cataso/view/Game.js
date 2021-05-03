@@ -299,6 +299,9 @@ Game.addCommand = function (game) {
             case Phase.DOMESTIC_TRADE2:
                 if (this.hasPriorityUid(game, uid)) { this.addDomesticTrade2Command(game); }
                 break;
+            case Phase.DOMESTIC_TRADE3:
+                this.addBroadcastTradeCommand(game);
+                break;
             case Phase.INTERNATIONAL_TRADE:
                 if (this.hasPriorityUid(game, uid)) { this.addInternationalTrade(game); }
                 break;
@@ -351,23 +354,69 @@ Game.addReadyCommand = function (game) {
     }
 
     if (canJoin) {
-        this.addSprite('view/button.png', 0, 610, 422, 80, 25, function () {
+        this.addSprite('view/button.png', 0, 610, 422, 80, 25, function () { // 着席
             Game.send('b');
         });
     }
 
     if (canLeave) {
-        this.addSprite('view/button.png', 1, 700, 422, 80, 25, function () {
+        this.addSprite('view/button.png', 1, 700, 422, 80, 25, function () { // 離席
             Game.send('c');
         });
 
-        if (canStart) {
+        if (canStart) { // 着席している人しか開始できない
             this.addSprite('view/button.png', 2, 520, 422, 80, 25, function () {
-                Game.send('d');
+                Game.send('d'); // 開始
             });
         }
     }
 }
+
+Game.addBroadcastTradeCommand = function (game) {
+    this.addSprite('view/skin.png', 0, 499, 338, 299, 205);
+
+    var i;
+    var len1 = game.playerSize;
+    var trade = game.trade;
+    console.log(game);
+    for (i = 0; i < len1; i++) {
+        if (i === game.active) {
+            this.addLabel('国内貿易オークション中', 516, i * 51 + 350, '24px');
+        } else {
+            if (game.playerList[i].uid === uid) {
+                if(game.playerList[i].trading) {
+
+                    this.addLabel('出)', 500, i * 51 + 347);
+                    this.addLabel('求)', 500, i * 51 + 367);
+                    for (j = 0; j < 5; j++) {
+                        this.addSprite('view/resource.png', j, j * 20 + 520, i * 51 + 347, 15, 15);
+                        this.addSprite('view/resource.png', j, j * 20 + 520, i * 51 + 367, 15, 15);
+                        this.addLabel(trade.input[j], j * 20 + 524, i * 51 + 347)
+                        this.addLabel(trade.output[j], j * 20 + 524, i * 51 + 367)
+                    }
+                    this.addSprite('view/button.png', 12, 625, i * 51 + 351, 80, 25, function () {
+                        var _i = i;
+                        return function () {
+                            Game.send('N' + _i);
+                        };
+                    }());
+                    
+                    this.addSprite('view/button.png', 13, 715, i * 51 + 351, 80, 25, function () {
+                        var _i = i;
+                        return function () {
+                            Game.send('O' + _i);
+                        };
+                    }());
+                } 
+            } else if(game.playerList[i].trading) {
+                this.addLabel('交渉中', 618, i * 51 + 350, '24px');
+            } else {
+                this.addLabel('交渉決裂', 605, i * 51 + 350, '24px');
+            }
+        }
+    }
+}
+
 
 Game.addBurstCommand = function (game) {
     this.addSprite('view/skin.png', 0, 499, 338, 299, 205);
@@ -490,7 +539,10 @@ Game.addDomesticTrade1Command = function (game) {
         }());
     }
     
-    this.addSprite('view/button.png', 13, 610, 515, 80, 25, function () {
+    this.addSprite('view/button.png', 22, 610, 515, 80, 25, function () {
+        Game.send('v9 ' + Game.trade.input.join(' ') + ' ' + Game.trade.output.join(' '));
+    });
+    this.addSprite('view/button.png', 13, 700, 515, 80, 25, function () {
         Game.send('e');
     });
 }
