@@ -14,6 +14,7 @@ Tkm.Sound.JOIN = 6;
 Tkm.Sound.OPENING = 7;
 Tkm.Sound.PASS = 8;
 Tkm.Sound.ROBBER = 9;
+Tkm.Sound.HATA = 10;
 
 Tkm.view = null;
 // Tkm.wsurl = 'ws://localhost:5000';
@@ -33,6 +34,7 @@ Tkm.soundUrlList = [
     , '../se/opening'
     , '../se/pass'
     , '../se/robber'
+    , '../se/hata'
 ];
 Tkm.webAudioContext = null;
 Tkm.soundList = [];
@@ -40,8 +42,12 @@ Tkm.volume = 0.05;
 Tkm.isMuteSE = false;
 Tkm.isMuteBell = false;
 
-Tkm._sound = function (type) {
+Tkm._sound = function (type, volume) {
     try {
+        var seVolume = Tkm.volume;
+        if(volume) {
+            seVolume = volume;
+        }
         if (Tkm.audio === Tkm.Audio.WEB_AUDIO_API) {
             var gainNode = Tkm.webAudioContext.createGain();
             var source = Tkm.webAudioContext.createBufferSource();
@@ -49,20 +55,24 @@ Tkm._sound = function (type) {
             source.buffer = Tkm.soundList[type];
             source.connect(gainNode);
             gainNode.connect(Tkm.webAudioContext.destination);
-            gainNode.gain.value = Tkm.volume;
+            gainNode.gain.value = seVolume;
 
             source.start();
         } else {
             var instance = createjs.Sound.createInstance(type);
 
-            instance.setVolume(Tkm.volume);
+            instance.setVolume(seVolume);
             instance.play();
         }
     } catch (e) { }
 }
 
 Tkm.sound = function (type) {
-    if(!Tkm.isMuteSE) { Tkm._sound(type); }
+    var volume = Tkm.volume;
+    if(type === Tkm.Sound.HATA) {
+        volume = 4 * Tkm.volume;
+    }
+    if(!Tkm.isMuteSE) { Tkm._sound(type, volume); }
 }
 
 Tkm.send = function (message) {
