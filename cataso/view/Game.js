@@ -384,7 +384,7 @@ Game.addBroadcastTradeCommand = function (game) {
             if (game.playerList[i].uid === uid) {
                 this.addLabel('国内貿易オークション中', 505, i * 51 + 352, '18px');
                 this.addSprite('view/button.png', 13, 715, i * 51 + 350, 80, 25, function() {
-                    Game.send('P');
+                    Game.send('e');
                 }); 
             } else {
                 this.addLabel('国内貿易オークション中', 516, i * 51 + 350, '24px');
