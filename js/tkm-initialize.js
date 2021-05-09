@@ -17,8 +17,7 @@ Tkm.Sound.ROBBER = 9;
 Tkm.Sound.HATA = 10;
 
 Tkm.view = null;
-// Tkm.wsurl = 'ws://localhost:5000';
-Tkm.wsurl = 'wss://cataso2.omatz.cf';
+Tkm.wsurl = WSURL;
 Tkm.ws = null;
 Tkm.roomIndex = null;
 Tkm.userList = [];
