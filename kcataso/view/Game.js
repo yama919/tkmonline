@@ -1347,6 +1347,8 @@ Game.hasLand = function (game, color, resource) {
 
 Game.canUseCard = function (game, card) {
     switch(card) {
+        case Card.CRANE:
+            return Game.canDevelope(game, game.active);
         case Card.IRRIGATION:
             return Game.hasLand(game, game.active, Resource.GRAIN);
         case Card.MINING:
