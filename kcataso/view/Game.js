@@ -1277,8 +1277,8 @@ Game.addAlchemistCommand = function (game) {
 }
 
 // Begin: カード
-Game.hasCard = function (game, color) {
-    return game.playerList[color].progressCard.filter(c => c !== Card.ALCHEMIST).length > 0;
+Game.hasCard = function (game, color, exclude = []) {
+    return game.playerList[color].progressCard.filter(c => !exclude.some(e => e === c)).length > 0;
 }
 
 Game.hasSpecificCard = function (game, color, card) {
@@ -1342,7 +1342,10 @@ Game.canUseCard = function (game, card) {
             let activePlayer = game.playerList[game.active];
             return game.playerList.filter((p, i) => i !== game.active).some(p => p.resource.reduce((p, c) => p + c, 0) > 1
                    && (p.baseScore + p.bonusScore + p.victoryPoint) >= (activePlayer.baseScore + activePlayer.bonusScore + activePlayer.victoryPoint));
+        case Card.SPY:
+            return game.playerList.some((p, i) => i !== game.active && Game.hasCard(game, i));
         case Card.WEDDING:
+        case Card.MASTER_MERCHANT:
             let activePlayer2 = game.playerList[game.active];
             return game.playerList.filter((p, i) => i !== game.active).some(p => p.resource.reduce((p, c) => p + c, 0) > 0
                    && (p.baseScore + p.bonusScore + p.victoryPoint) > (activePlayer2.baseScore + activePlayer2.bonusScore + activePlayer2.victoryPoint));
@@ -1576,7 +1579,7 @@ Game.addMainCommand = function (game) {
         }
     }());
     this.addSprite('view/button.png', 7, 520, 414, 80, 25, function () { // カード
-        if(Game.hasCard(game, game.active)) {
+        if(Game.hasCard(game, game.active, [Card.ALCHEMIST])) {
             return function () {
                 Game.send('Q');
             };
