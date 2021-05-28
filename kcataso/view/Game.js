@@ -212,7 +212,7 @@ Game.addHeadLine = function (game) {
                 text = '初期配置 道(1本目)';
                 break;
             case Phase.SETUP_SETTLEMENT2:
-                text = '初期配置 家(2件目)';
+                text = '初期配置 街(2件目)';
                 break;
             case Phase.SETUP_ROAD2:
                 text = '初期配置 道(2本目)';
@@ -250,8 +250,11 @@ Game.addHeadLine = function (game) {
             case Phase.DOMESTIC_TRADE2:
                 text = '国内貿易(確認)';
                 break;
+            case Phase.DOMESTIC_TRADE3:
+                text = '国内貿易(オークション)';
+                break;
             case Phase.SOLDIER2:
-                text = '騎士カード(略奪)';
+                text = '騎士(略奪)';
                 break;
             case Phase.ROAD_BUILDING1:
                 text = '街道カード(1本目)';
@@ -259,27 +262,67 @@ Game.addHeadLine = function (game) {
             case Phase.ROAD_BUILDING2:
                 text = '街道カード(2本目)';
                 break;
-            case Phase.YEAR_OF_PLENTY1:
-                text = '収穫カード(1枚目)';
-                break;
-            case Phase.YEAR_OF_PLENTY2:
-                text = '収穫カード(2枚目)';
-                break;
-            case Phase.MONOPOLY:
-                text = '独占カード';
+            case Phase.BARBARIAN_SAVE1:
+            case Phase.BARBARIAN_SAVE2:
+            case Phase.BARBARIAN_DEFEAT1:
+                text = '蛮族アクション'
                 break;
             case Phase.SOLDIER1:
+            case Phase.BUILD_KNIGHT:
+            case Phase.ACTIVATE_KNIGHT:
+            case Phase.PROMOTE_KNIGHT:
+            case Phase.MOVE_KNIGHT1:
+            case Phase.MOVE_KNIGHT2:
+            case Phase.MOVE_KNIGHT3:
+            case Phase.MOVE_ROBBER1:
+            case Phase.MOVE_ROBBER2:
+            case Phase.MOVE_ROBBER3:
                 text = '騎士アクション';
                 break;
             case Phase.DEVELOPMENT1:
                 text = '都市開発';
+                break;
+            case Phase.BUILD_METROPOLIS:
+                text = 'メトロポリス'
+                break;
+            case Phase.GAIN_RESOURCE:
+                text = '資源獲得'
+                break;
+            case Phase.BUILD_CITYWALL:
+                text = '城壁'
+                break;
+            case Phase.DISCARD_CARD:
+                text = 'カード廃棄'
                 break;
             case Phase.USE_CARD:
             case Phase.CRANE    :
             case Phase.ENGINEER :
             case Phase.INVENTOR1:
             case Phase.INVENTOR2:
-            case Phase.MEDICINE :                
+            case Phase.MEDICINE : 
+            case Phase.SMITH1:
+            case Phase.SMITH2:
+            case Phase.BISHOP:
+            case Phase.DESERTER1:
+            case Phase.DESERTER2:
+            case Phase.DESERTER3:
+            case Phase.DIPLOMAT1:
+            case Phase.DIPLOMAT2:
+            case Phase.INTRIGUE:
+            case Phase.SABOTEUR:
+            case Phase.SPY1:
+            case Phase.SPY2:
+            case Phase.WEDDING:
+            case Phase.ALCHEMIST:
+            case Phase.COMMERCIAL_HARBOR1:
+            case Phase.COMMERCIAL_HARBOR2:
+            case Phase.MASTER_MERCHANT1:
+            case Phase.MASTER_MERCHANT2:
+            case Phase.MASTER_MERCHANT3:
+            case Phase.MERCHANT_FLEET:
+            case Phase.RESOURCE_MONOPOLY:
+            case Phase.TRADE_MONOPOLY:
+            case Phase.MERCHANT:       
                 text = 'カード';
                 break;
         }
