@@ -218,6 +218,42 @@
                         </a>
                     </td>
                 </tr>
+                <tr>
+                    <td id="room25" class="room">
+                        <a href="#" target="_blank">
+                            <div class="room-title">使えません</div>
+                            <div class="room-number"></div>
+                            <div class="cataso-ready"></div>
+                        </a>
+                    <td id="room26" class="room">
+                        <a href="kcataso/I.html" target="_blank">
+                            <div class="room-title">騎士カタソI</div>
+                            <div class="room-number"></div>
+                            <div class="cataso-ready"></div>
+                        </a>
+                    </td>
+                    <td id="room27" class="room">
+                        <a href="kcataso/II.html" target="_blank">
+                            <div class="room-title">騎士カタソII</div>
+                            <div class="room-number"></div>
+                            <div class="cataso-ready"></div>
+                        </a>
+                    </td>
+                    <td id="room28" class="room">
+                        <a href="kcataso/III.html" target="_blank">
+                            <div class="room-title">騎士カタソIII</div>
+                            <div class="room-number"></div>
+                            <div class="cataso-ready"></div>
+                        </a>
+                    </td>
+                    <td id="room29" class="room">
+                        <a href="kcataso/IV.html" target="_blank">
+                            <div class="room-title">騎士カタソIV</div>
+                            <div class="room-number"></div>
+                            <div class="cataso-ready"></div>
+                        </a>
+                    </td>
+                </tr>
             </table>
         </div>
 
@@ -250,7 +286,7 @@
             var args = e.data.substring(1).split(' ');
 
             var i;
-            for (i = 0; i <= 24; i++) {
+            for (i = 0; i <= 29; i++) {
                 var roomDiv = document.getElementById('room' + i).getElementsByTagName('div');
                 roomDiv[1].textContent = args[i * 3];
 
