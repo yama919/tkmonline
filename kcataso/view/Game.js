@@ -444,6 +444,7 @@ Game.addCommand = function (game) {
                 break;
             case Phase.PROMOTE_KNIGHT:              
             case Phase.SMITH1:
+            case Phase.SMITH2:
                 if (this.hasPriorityUid(game, uid)) {
                     this.addLabel('昇格する騎士を選択してください。', 610, 400);
                     this.addSprite('view/button.png', 13, 610, 435, 80, 25, function () {
@@ -451,11 +452,6 @@ Game.addCommand = function (game) {
                     });
                 }
                 break;
-            case Phase.SMITH2:              
-                if (this.hasPriorityUid(game, uid)) {
-                    this.addLabel('昇格する騎士を選択してください。', 610, 400);
-                }
-                break;        
             case Phase.DESERTER1:
                 if (this.hasPriorityUid(game, uid)) { this.addDeserterCommand(game); }
                 break;
