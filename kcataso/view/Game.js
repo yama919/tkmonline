@@ -1697,6 +1697,7 @@ Game.addPlayer = function (game, color) {
     this.addLabel('道:' + game.playerList[color].roadStock, 640, color * 78 + 43, '12px');
     this.addLabel('家:' + game.playerList[color].settlementStock, 675, color * 78 + 43, '12px');
     this.addLabel('街:' + game.playerList[color].cityStock, 704, color * 78 + 43, '12px');
+    this.addLabel('壁:' + game.playerList[color].cityWallStock, 733, color * 78 + 43, '12px');
 
     
     for(let developmentIndex = 0; developmentIndex < 3; developmentIndex++) {
