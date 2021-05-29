@@ -167,6 +167,7 @@ this.addSprite('view/background.png', 0, 0, 0, 932, 545);
     this.addCanPillageSettlement(game);
     this.addCanPillageCity(game);
     this.addCanBuildMetropolis(game);
+    this.addCanPillagedMetropolis(game, game.priority[0]);
     this.addCanBuildCityWall(game);
     this.addCanMoveRobber(game);
     this.addCanSwapLand(game);
@@ -2825,6 +2826,54 @@ Game.addCanBuildMetropolis = function (game) {
             var color = game.settlementList[i] & 0x00ff;
             
             if (rank === SettlementRank.CITY && color === game.active) {
+                var x;
+                var y;
+
+                if (i < 7) {
+                    x = i * 34.5 + 130;
+                    y = i % 2 === 0 ? 148 : 130;
+                } else if (i < 16) {
+                    x = (i - 7) * 34.5 + 96;
+                    y = i % 2 === 0 ? 189 : 207;
+                } else if (i < 27) {
+                    x = (i - 16) * 34.5 + 62;
+                    y = i % 2 === 0 ? 266 : 248;
+                } else if (i < 38) {
+                    x = (i - 27) * 34.5 + 62;
+                    y = i % 2 === 0 ? 325 : 307;
+                } else if (i < 47) {
+                    x = (i - 38) * 34.5 + 97;
+                    y = i % 2 === 0 ? 366 : 384;
+                } else {
+                    x = (i - 47) * 34.5 + 132;
+                    y = i % 2 === 0 ? 443 : 425;
+                }
+                
+                this.addSprite('view/settlement.png', 8, x, y, 30, 30, function () {
+                    var _i = i;
+                    
+                    return function () {
+                        Game.send('H' + _i);
+                    };
+                }(), 0.7);
+            }
+        }
+    }
+}
+Game.addCanPillagedMetropolis = function (game, player) {
+    if (
+           game.state === State.PLAYING
+        && game.phase === Phase.CHOICE_PILLAGED_METROPOLIS
+        && this.hasPriorityUid(game, uid)
+    ) {
+        this.addLabel('壊すメトロポリスを選択してください。', 610, 400);
+        var i;
+        var len1 = game.settlementList.length;
+        for (i = 0; i < len1; i++) {
+            var rank = game.settlementList[i] & 0xff00;
+            var color = game.settlementList[i] & 0x00ff;
+            
+            if (rank === SettlementRank.METROPOLIS && color === player) {
                 var x;
                 var y;
 
