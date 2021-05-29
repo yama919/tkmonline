@@ -1765,7 +1765,7 @@ Game.addPlayer = function (game, color) {
             if (game.state === State.READY || game.playerList[color].uid === uid) {
                 this.addSprite('view/card.png', game.playerList[color].progressCard[card], card * 45 + 500, color * 78 + 79, 55, 20);
             } else {
-                this.addSprite('view/card.png', Card.BACK, card * 45 + 500, color * 78 + 79, 55, 20);
+                this.addSprite('view/card.png', Game.getColorByCard(game.playerList[color].progressCard[card]), card * 45 + 500, color * 78 + 79, 55, 20);
             }
     }
 
@@ -1787,6 +1787,17 @@ Game.addPlayer = function (game, color) {
     if (color === game.longestRoad) {
         this.addSprite('view/prize.png', 0, 777, color * 78 + 79, 20, 20);
     }
+}
+
+Game.getColorByCard = function (card) {
+    if(card >= Card.ALCHEMIST && card <= Card.SMITH) {
+        return Card.BACK_SCIENCE;
+    } else if (card >= Card.BISHOP && card <= Card.WEDDING) {
+        return Card.BACK_POLITICS;
+    } else if (card >= Card.COMMERCIAL_HARBOR && card <= Card.TRADE_MONOPOLY) {
+        return Card.BACK_TRADE;
+    }
+    return Card.BACK;
 }
 
 Game.addCanKnightDiplace = function (game) {

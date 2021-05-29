@@ -148,6 +148,11 @@ Card.MERCHANT_FLEET = 23;
 Card.RESOURCE_MONOPOLY = 24;
 Card.TRADE_MONOPOLY = 25;
 
+// Back
+Card.BACK_TRADE = 26;
+Card.BACK_POLITICS = 27;
+Card.BACK_SCIENCE = 28;
+
 
 
 Harbor = function () { }
