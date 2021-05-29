@@ -102,6 +102,17 @@ window.onload = function () {
             }
         }
 
+        if(document.getElementById('help-button')) {
+            document.getElementById('help-button').onclick = function () {
+                Tkm.isHelpVisible = !Tkm.isHelpVisible;
+                if(Tkm.isHelpVisible) {
+                    document.getElementById('help').style.display = 'block';
+                } else {
+                    document.getElementById('help').style.display = 'none';
+                }
+            }
+        }
+
         document.getElementById('play-select-volume').selectedIndex = 2;
 
         document.getElementById('play-select-volume').onchange = function () {

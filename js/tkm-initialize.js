@@ -40,6 +40,7 @@ Tkm.soundList = [];
 Tkm.volume = 0.05;
 Tkm.isMuteSE = false;
 Tkm.isMuteBell = false;
+Tkm.isHelpVisible = false;
 
 Tkm._sound = function (type, volume) {
     try {
