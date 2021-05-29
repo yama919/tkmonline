@@ -101,6 +101,7 @@ Game.onLoad = function () {
         , 'view/player.png'
         , 'view/dice-selecting.png'
         , 'view/merchant.png'
+        , 'view/tmpSettlements.png'
     );
 
     this.core.onload = function () {
@@ -1356,7 +1357,7 @@ Game.canUseCard = function (game, card) {
             return game.playerList[game.active].cityWallStock > 0
             && Game.hasCanBuildCityWall(game, game.active);
         case Card.MEDICINE:
-             return game.playerList[game.active].cityStock > 0
+             return (game.playerList[game.active].cityStock > 0 || Game.hasTmpSettlement(game, game.active))
              && game.playerList[game.active].resource[Resource.ORE] >= 2
              && game.playerList[game.active].resource[Resource.GRAIN] >= 1
              && Game.hasCanBuildCity(game)
@@ -1589,7 +1590,7 @@ Game.addMainCommand = function (game) {
     
     this.addSprite('view/button.png', 6, 700, 354, 80, 25, function () {
         if (
-               game.playerList[game.active].cityStock > 0
+               (game.playerList[game.active].cityStock > 0 || Game.hasTmpSettlement(game, game.active) )
             && game.playerList[game.active].resource[Resource.ORE] >= 3
             && game.playerList[game.active].resource[Resource.GRAIN] >= 2
             && Game.hasCanBuildCity(game)
@@ -2170,7 +2171,11 @@ Game.addSettlement = function (game) {
             if(rank === 3) {
                 this.addSprite('view/metropolis.png', game.settlementList[i] & 0x00ff, x, y, 30, 30);
             } else {
-                this.addSprite('view/settlement.png', (game.settlementList[i] & 0x00ff) * 2 + rank, x, y, 30, 30);
+                if((game.settlementList[i] & 0x00ff) === game.tmpSettlementList[i]) {
+                    this.addSprite('view/tmpSettlements.png', (3 - (game.settlementList[i] & 0x00ff)) * 2 + 1, x, y, 30, 30);
+                } else {
+                    this.addSprite('view/settlement.png', (game.settlementList[i] & 0x00ff) * 2 + rank, x, y, 30, 30);
+                }
             }
         }
     }
@@ -2765,6 +2770,12 @@ Game.addCanPillageCity = function (game) {
         }
     }
 }
+
+
+Game.hasTmpSettlement = function (game, player) {
+    return game.tmpSettlementList.filter(p => p === player).length > 0;
+}
+
 Game.addCanBuildCity = function (game) {
     if (
            game.state === State.PLAYING
@@ -2776,8 +2787,17 @@ Game.addCanBuildCity = function (game) {
         for (i = 0; i < len1; i++) {
             var rank = game.settlementList[i] & 0xff00;
             var color = game.settlementList[i] & 0x00ff;
+
+            var flag = false;
+            if(Game.hasTmpSettlement(game, game.active)) {
+                if(game.tmpSettlementList[i] === game.active) {
+                    flag = true;
+                }
+            } else {
+                flag = rank === SettlementRank.SETTLEMENT && color === game.active;
+            }
             
-            if (rank === SettlementRank.SETTLEMENT && color === game.active) {
+            if (flag) {
                 var x;
                 var y;
 
