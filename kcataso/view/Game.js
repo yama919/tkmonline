@@ -179,6 +179,8 @@ this.addSprite('view/background.png', 0, 0, 0, 932, 545);
     this.addCanRemoveRoad(game);
     this.addCanKnightDiplace(game);
     this.addSprite('view/barbarian_tile.png', 0, 15, 340, 21, 161);
+    this.addLabel('蛮：' + Game.strengthOfBarbarian(game), 45, 460);
+    this.addLabel('騎：' + Game.strengthOfKnights(game), 45, 480);
     this.addSprite('view/barbarian_ship.png', 0, 15, 340 + 20 * ( 7 - game.barbarianPos), 21, 21, function(){}, 0.5);
     
     
@@ -3640,6 +3642,24 @@ Game.addStock = function (game) {
             }
 
         }
+    }
+
+    Game.strengthOfKnights = function (game) {
+        return game.knightList.reduce((total, knight, index) => {
+            if(Game.isKnightActive(game, index)) {
+                return total + ((knight & 0xff0000) >>> 16);
+            }
+            return total;
+        }, 0);        
+    }
+    Game.strengthOfBarbarian = function (game) {
+        return game.settlementList.reduce((total, s) => {
+            if((s & 0xff00) >= SettlementRank.CITY) {
+                return total + 1;
+            }
+            return total;
+        }, 0);
+
     }
     
     // if (game.cardStock.length > 0) {
