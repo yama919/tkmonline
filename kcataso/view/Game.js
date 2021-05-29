@@ -136,6 +136,19 @@ this.addSprite('view/background.png', 0, 0, 0, 932, 545);
     // this.addSprite('view/resource.png',1,54+390,520,15,15);
     // this.addSprite('view/resource.png',2,70+390,520,15,15);
     // this.addSprite('view/resource.png',3,86+390,520,15,15);
+    if(game.eventHistory && game.eventHistory.length  > 0) {
+        for(var event = 0; event < 4; event++) {
+            var eventType = [
+                 '黒'
+                ,'青'
+                ,'緑'
+                ,'黄'
+            ];
+            this.addLabel(eventType[event] + ':', 350, 20 + 15 * event);
+            this.addLabel('' + ( '  ' + Math.round(game.eventHistory.filter(d => d === event).length / game.eventHistory.length * 100) ).slice( -3 ), 375, 20 + 15 * event);
+            this.addLabel('%', 400, 20 + 15 * event);
+        }
+    }
     if(game.diceHistory && game.diceHistory.length  > 0) {
         this.addLabel(`${game.diceHistory.length}ターン`, 425, 5);
         for(var diceNum = 2; diceNum <= 12; diceNum++) {
@@ -3644,18 +3657,18 @@ Game.addStock = function (game) {
                 var resourceMax = 19;
             }
            
-            this.addLabel(String(resourceMax-game.resourceStock[i]), i * 27 + 147, 70);
+            this.addLabel(String(resourceMax-game.resourceStock[i]), i * 27 + 117, 70);
             if(spriteB) {
-                sprite.x = i * 27 + 140;
+                sprite.x = i * 27 + 110;
                 sprite.image = new Surface(24, 38);
                 sprite.image.context.fillStyle = 'rgb(255,255,255)';
                 sprite.image.context.fillRect(0, 0, 24, 38);
-                spriteB.x = i * 27 + 152;
+                spriteB.x = i * 27 + 122;
                 spriteB.image = new Surface(11, 30);
                 spriteB.image.context.fillStyle = 'rgb(255,255,255)';
                 spriteB.image.context.fillRect(0, 0, 11, 38);
             } else {
-                sprite.x = i * 27 + 140;
+                sprite.x = i * 27 + 110;
                 sprite.image = new Surface(24, 38);
                 sprite.image.context.fillStyle = 'rgb(255,255,255)';
                 sprite.image.context.fillRect(0, 0, 24, 38);
@@ -3664,38 +3677,38 @@ Game.addStock = function (game) {
             switch (i) {
                 case Resource.BRICK:
                     sprite.image.context.fillStyle = 'rgb(136,0,21)';
-                    this.addLabel('土', i * 27 + 145, 10);
+                    this.addLabel('土', i * 27 + 115, 10);
                     break;
                 case Resource.WOOL:
                     sprite.image.context.fillStyle = 'rgb(181,230,29)';
-                    this.addLabel('羊', i * 27 + 145, 10);
+                    this.addLabel('羊', i * 27 + 115, 10);
                     break;
                 case Resource.ORE:
                     sprite.image.context.fillStyle = 'rgb(127,127,127)';
-                    this.addLabel('鉄', i * 27 + 145, 10);
+                    this.addLabel('鉄', i * 27 + 115, 10);
                     break;
                 case Resource.GRAIN:
                     sprite.image.context.fillStyle = 'rgb(255,242,0)';
-                    this.addLabel('麦', i * 27 + 145, 10);
+                    this.addLabel('麦', i * 27 + 115, 10);
                     break;
                 case Resource.LUMBER:
                     sprite.image.context.fillStyle = 'rgb(34,177,76)';
-                    this.addLabel('木', i * 27 + 145, 10);
+                    this.addLabel('木', i * 27 + 115, 10);
                     break;
                 case Resource.CLOTH:
                     sprite.image.context.fillStyle = 'rgb(150,91,2)';
                     spriteB.image.context.fillStyle = 'rgb(249,149,3)';
-                    this.addLabel('服', i * 27 + 145, 10);
+                    this.addLabel('服', i * 27 + 115, 10);
                     break;
                 case Resource.COIN:
                     sprite.image.context.fillStyle = 'rgb(32,161,161)';
                     spriteB.image.context.fillStyle = 'rgb(0,255,255)';
-                    this.addLabel('貨', i * 27 + 145, 10);
+                    this.addLabel('貨', i * 27 + 115, 10);
                     break;
                 case Resource.PAPER:
                     sprite.image.context.fillStyle = 'rgb(118,168,67)';
                     spriteB.image.context.fillStyle = 'rgb(0,255,0)';
-                    this.addLabel('紙', i * 27 + 145, 10);
+                    this.addLabel('紙', i * 27 + 115, 10);
                     break;
             }
             if (i >= Resource.CLOTH) {
