@@ -2041,6 +2041,21 @@ Game.addMap = function (game) {
             }
         }
 
+        if(game.merchantInfo[0] !== Index.NONE) {
+            var merchantIndex = game.merchantInfo[0];
+            if (merchantIndex < 3) {
+                this.addSprite('view/merchant.png', 0, merchantIndex * 69 + 155, 159, 50, 50);
+            } else if (merchantIndex < 7) {
+                this.addSprite('view/merchant.png', 0, (merchantIndex - 3) * 69 + 121, 218, 50, 50);
+            } else if (merchantIndex < 12) {
+                this.addSprite('view/merchant.png', 0, (merchantIndex - 7) * 69 + 87, 277, 50, 50);
+            } else if (merchantIndex < 16) {
+                this.addSprite('view/merchant.png', 0, (merchantIndex - 12) * 69 + 122, 336, 50, 50);
+            } else {
+                this.addSprite('view/merchant.png', 0, (merchantIndex - 16) * 69 + 157, 395, 50, 50);
+            }
+        }
+
         var len1 = game.numberList.length;
         for (i = 0; i < len1; i++) {
             if (game.numberList[i] !== Land.DESERT) {
@@ -2076,21 +2091,7 @@ Game.addMap = function (game) {
             this.addSprite('view/robber.png', 0, (game.robber - 16) * 69 + 157, 395, 50, 50, null, 0.7);
         }
         
-        if(game.merchantInfo[0] !== Index.NONE) {
-            var merchantIndex = game.merchantInfo[0];
-            var merchantPlayer = game.merchantInfo[1];
-            if (merchantIndex < 3) {
-                this.addSprite('view/merchant.png', merchantPlayer, merchantIndex * 69 + 155, 159, 50, 50);
-            } else if (merchantIndex < 7) {
-                this.addSprite('view/merchant.png', merchantPlayer, (merchantIndex - 3) * 69 + 121, 218, 50, 50);
-            } else if (merchantIndex < 12) {
-                this.addSprite('view/merchant.png', merchantPlayer, (merchantIndex - 7) * 69 + 87, 277, 50, 50);
-            } else if (merchantIndex < 16) {
-                this.addSprite('view/merchant.png', merchantPlayer, (merchantIndex - 12) * 69 + 122, 336, 50, 50);
-            } else {
-                this.addSprite('view/merchant.png', merchantPlayer, (merchantIndex - 16) * 69 + 157, 395, 50, 50);
-            }
-        }
+
     }
 }
 
