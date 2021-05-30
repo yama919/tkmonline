@@ -81,6 +81,7 @@ Phase.RESOURCE_MONOPOLY = 67;
 Phase.TRADE_MONOPOLY = 68;
 Phase.MERCHANT = 69;
 Phase.CHOICE_PILLAGED_METROPOLIS = 70;
+Phase.DISCARD_CARD_OTHER = 71;
 
 Land = function () { }
 Land.DESERT = -1;

@@ -309,6 +309,7 @@ Game.addHeadLine = function (game) {
                 text = '城壁'
                 break;
             case Phase.DISCARD_CARD:
+            case Phase.DISCARD_CARD_OTHER:
                 text = 'カード廃棄'
                 break;
             case Phase.USE_CARD:
@@ -439,6 +440,7 @@ Game.addCommand = function (game) {
                 if (this.hasPriorityUid(game, uid)) { this.addGainResourceCommand(game); }
                 break;
             case Phase.DISCARD_CARD:
+            case Phase.DISCARD_CARD_OTHER:
                 if (this.hasPriorityUid(game, uid)) { this.addDiscardCardCommand(game); }
                 break;
             case Phase.BARBARIAN_SAVE2:
@@ -1419,7 +1421,6 @@ Game.canUseCard = function (game, card) {
 
 Game.addDiscardCardCommand = function (game) {
     this.addLabel('破棄するカードを選択して下さい。', 580, 400);
-    console.log(game.priority);
     for (let card = 0; card < game.playerList[game.priority[0]].progressCard.length; card++) {
         this.addSprite('view/card.png', game.playerList[game.priority[0]].progressCard[card], card * 56 + 560, 425, 55, 20, function () {
             var _i = card;
