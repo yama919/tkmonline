@@ -40,6 +40,10 @@ Phase.TRAITOR1 = 14;
 Phase.TRAITOR2 = 15;
 Phase.DRAW = 16;
 
+Mode = function () {}
+Mode.BASIC = 0;
+Mode.ADVANCE = 1;
+
 Card = function () { }
 Card.TROOP = 0;
 Card.TACTICS = 1;

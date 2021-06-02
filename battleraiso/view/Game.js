@@ -913,7 +913,8 @@ Game.addBattleLine = function (game) {
                         || game.phase === Phase.REDEPLOY1
                         || game.phase === Phase.DESERTER
                         || game.phase === Phase.TRAITOR1
-                    ) && activePlayer.field[i].length === game.size[i]
+                        || ( game.phase === Phase.DRAW && game.setup === Mode.BASIC)
+                    ) && activePlayer.field[i].length === game.size[i] && game.flagList[i] === -1
                 ) {
                     activeScore = Game.score(game.weather[i], activePlayer.field[i]);
 
