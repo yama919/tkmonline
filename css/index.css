@@ -35,6 +35,11 @@ body {
     width: 80px;
 }
 
+#message {
+    float: left;
+    margin-left: 25%;  
+}
+
 #wrapper {
     margin: 0 auto 0 auto;
     width: 850px;
