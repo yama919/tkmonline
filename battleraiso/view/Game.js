@@ -292,8 +292,36 @@ Game.addPlayer = function (game, color) {
     }
 
     this.addLabel(game.playerList[color].uid, 687, color * 78 + 27);
+    if(game.playerList[color].time) {
+        this.addLabel('時間: ' + this.toHms(game.playerList[color].time), 663, color * 78 + 85);
+    }
 
-    this.addLabel('戦術 ' + game.playerList[color].count + '枚', 678, color * 78 + 62, '22px');
+    this.addLabel('戦術 ' + game.playerList[color].count + '枚', 678, color * 78 + 56, '22px');
+}
+
+Game.toHms = function (t) {
+	var hms = "";
+	var h = t / 3600 | 0;
+	var m = t % 3600 / 60 | 0;
+	var s = t % 60;
+
+	if (h != 0) {
+		hms = h + "時間" + padZero(m) + "分" + padZero(s) + "秒";
+	} else if (m != 0) {
+		hms = m + "分" + padZero(s) + "秒";
+	} else {
+		hms = s + "秒";
+	}
+
+	return hms;
+
+	function padZero(v) {
+		if (v < 10) {
+			return "0" + v;
+		} else {
+			return v;
+		}
+	}
 }
 
 Game.canPlayTroop = function (game, color) {
