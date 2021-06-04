@@ -63,6 +63,7 @@ Game.onLoad = function () {
         , 'view/flag.png'
         , 'view/touch.png'
         , 'view/before.png'
+        , 'view/mode.png'
     );
 
     this.core.onload = function () {
@@ -79,6 +80,7 @@ Game.onMessage = function (game) {
     this.canSend = true;
     this.removeAll();
     this.addSprite('view/background.png', 0, 0, 0, 800, 545);
+    this.addSprite('view/mode.png', game.setup, 775, 3, 20, 20);
     this.addHeadLine(game);
     this.addCommand(game);
     this.addHand(game, 0);
@@ -92,7 +94,7 @@ Game.onMessage = function (game) {
     this.addTouch(game);
     this.addTroopDeck(game);
     this.addTacticsDeck(game);
-
+    
     var i;
     for (i = 0; i < 2; i++) { this.addPlayer(game, i); }
 }
