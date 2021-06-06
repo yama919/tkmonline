@@ -80,7 +80,9 @@ Game.onMessage = function (game) {
     this.canSend = true;
     this.removeAll();
     this.addSprite('view/background.png', 0, 0, 0, 800, 545);
-    this.addSprite('view/mode.png', game.setup, 775, 3, 20, 20);
+    this.addSprite('view/mode.png', game.setup, 775, 3, 20, 20, function () {
+        prompt("", JSON.stringify(game));
+    });
     this.addHeadLine(game);
     this.addCommand(game);
     this.addHand(game, 0);
