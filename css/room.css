@@ -198,7 +198,7 @@ body {
     border-radius: 5px;
 }
 
-#play-button-bell {
+#play-button-bell, #button-view-log {
     float: left;
     width: 50px;
     height: 25px;
@@ -303,7 +303,7 @@ body {
     border-radius: 5px;
 }
 
-#help {
+#help, #log-view {
     width:80%;
     height: 100%;
     margin:auto;

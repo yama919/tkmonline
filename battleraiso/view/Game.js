@@ -5,6 +5,7 @@ var Game = function () { }
 Game.isOpen = false;
 Game.canSend = true;
 Game.core = null;
+Game.current = null;
 
 Game.send = function (message) {
     if (this.canSend) {
@@ -75,6 +76,7 @@ Game.onLoad = function () {
 }
 
 Game.onMessage = function (game) {
+    Game.current = game.playLog;
     if (game.sound !== '') { sound(game.sound); }
 
     this.canSend = true;
@@ -99,6 +101,10 @@ Game.onMessage = function (game) {
     
     var i;
     for (i = 0; i < 2; i++) { this.addPlayer(game, i); }
+}
+
+Game.onDownloadLog = function () {
+    return Game.current;
 }
 
 Game.removeAll = function () {

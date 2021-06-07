@@ -52,6 +52,9 @@ window.onload = function () {
         }
 
         Tkm.view = document.getElementById('play-view').contentWindow;
+        if(document.getElementById('log-view')) {
+            Tkm.log = document.getElementById('log-view').contentWindow;
+        }
 
         document.getElementById('login-button').onclick = function () {
             var uid = document.getElementById('login-input-uid').value;
@@ -99,6 +102,18 @@ window.onload = function () {
         if(document.getElementById('kishi-tobasu')) {
             document.getElementById('kishi-tobasu').onclick = function () {
                 Tkm.send('c' + '手出してきたら騎士飛ばす');
+            }
+        }
+        if(document.getElementById('button-view-log')) {
+            document.getElementById('button-view-log').onclick = function () {
+                Tkm.isLogVisible = !Tkm.isLogVisible;
+                if(Tkm.isLogVisible) {
+                    document.getElementById('log-view').style.display = 'block';
+                } else {
+                    document.getElementById('log-view').style.display = 'none';
+                }
+                var logs  = Tkm.view.downloadLog();
+                Tkm.log.onDownloadLog(logs);
             }
         }
 
