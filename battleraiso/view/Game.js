@@ -76,7 +76,7 @@ Game.onLoad = function () {
 }
 
 Game.onMessage = function (game) {
-    Game.current = game.playLog;
+    Game.current = game;
     if (game.sound !== '') { sound(game.sound); }
 
     this.canSend = true;
