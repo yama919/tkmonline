@@ -1489,7 +1489,7 @@ Game.addMerchantFleetCommand = function (game) {
     this.addLabel('資源を選択して下さい。', 630, 380);
     var i;
     for (i = 0; i < 8; i++) {
-        this.addSprite('view/resource-button.png', i + 16, i * 40 + 560, 425, 30, 30, function () {
+        this.addSprite('view/resource-button.png', i, i * 40 + 560, 425, 30, 30, function () {
             var _i = i;
             return function () {
                 Game.send('H' + _i);
@@ -1507,7 +1507,7 @@ Game.addChoiceResourceCommand = function (game, player, cancelable, dontCare) {
     var i;
     for (i = 0; i < 5; i++) {
         if(dontCare || game.playerList[player].resource[i] > 0) {
-            this.addSprite('view/resource-button.png', i + 16, i * 40 + 615, 425, 30, 30, function () {
+            this.addSprite('view/resource-button.png', i, i * 40 + 615, 425, 30, 30, function () {
                 var _i = i;
                 return function () {
                     Game.send('H' + _i);
@@ -1527,7 +1527,7 @@ Game.addChoiceCommodityCommand = function (game, player, cancelable, dontCare) {
     var i;
     for (i = 5; i < 8; i++) {
         if(dontCare || game.playerList[player].resource[i] > 0) {
-            this.addSprite('view/resource-button.png', i + 16, (i - 5) * 40 + 650, 425, 30, 30, function () {
+            this.addSprite('view/resource-button.png', i, (i - 5) * 40 + 650, 425, 30, 30, function () {
                 var _i = i;
                 return function () {
                     Game.send('H' + _i);
