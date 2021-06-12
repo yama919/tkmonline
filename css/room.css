@@ -177,6 +177,13 @@ body {
     margin: 3px 0 0 5px;
 }
 
+.play-view-long {
+    height: 785px !important;
+}
+.play-log-long {
+    height: 618px !important;
+}
+
 #play-input-chat {
     float: left;
     width: 815px;
