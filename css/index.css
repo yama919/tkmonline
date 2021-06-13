@@ -121,6 +121,14 @@ body {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+.blocas-ready {
+    background-image: url(../png/blocas-ready.png);
+    height: 140px;
+    width: 160px;
+    clear: both;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
 
 .acquiso-ready {
     background-image: url(../png/acquiso-ready.png);
@@ -151,6 +159,14 @@ body {
 
 .cataso-playing {
     background-image: url(../png/cataso-playing.png);
+    height: 140px;
+    width: 160px;
+    clear: both;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.blocas-playing {
+    background-image: url(../png/blocas-playing.png);
     height: 140px;
     width: 160px;
     clear: both;

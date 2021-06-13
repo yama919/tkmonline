@@ -253,6 +253,46 @@
                             <div class="room-number"></div>
                             <div class="cataso-ready"></div>
                     </td>
+                    <td id="room30" class="hidden">
+                            <div class="room-title"></div>
+                            <div class="room-number"></div>
+                            <div class="cataso-ready"></div>
+                    </td>
+                    <td id="room31" class="room">
+                        <a href="blocas/I.html" target="_blank">
+                            <div class="room-title">ブロッカスI</div>
+                            <div class="room-number"></div>
+                            <div class="blocas-ready"></div>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td id="room32" class="room">
+                        <a href="blocas/II.html" target="_blank">
+                            <div class="room-title">ブロッカスII</div>
+                            <div class="room-number"></div>
+                            <div class="blocas-ready"></div>
+                        </a>
+                    </td>
+                    <td id="room33" class="room">
+                        <a href="blocas/III.html" target="_blank">
+                            <div class="room-title">ブロッカスIII</div>
+                            <div class="room-number"></div>
+                            <div class="blocas-ready"></div>
+                        </a>
+                    </td>
+                    <td id="room34" class="room">
+                        <a href="blocas/IV.html" target="_blank">
+                            <div class="room-title">ブロッカスIV</div>
+                            <div class="room-number"></div>
+                            <div class="blocas-ready"></div>
+                        </a>
+                    </td>
+                    <td id="room35" class="hidden">
+                            <div class="room-title"></div>
+                            <div class="room-number"></div>
+                            <div class="cataso-ready"></div>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -286,7 +326,7 @@
             var args = e.data.substring(1).split(' ');
 
             var i;
-            for (i = 0; i <= 29; i++) {
+            for (i = 0; i <= 35; i++) {
                 var roomDiv = document.getElementById('room' + i).getElementsByTagName('div');
                 roomDiv[1].textContent = args[i * 3];
 
@@ -323,6 +363,13 @@
                             roomDiv[2].className = 'goipai-playing';
                         } else {
                             roomDiv[2].className = 'goipai-ready';
+                        }
+                        break;
+                    case 'l':
+                        if (args[i * 3 + 2] === 'p') {
+                            roomDiv[2].className = 'blocas-playing';
+                        } else {
+                            roomDiv[2].className = 'blocas-ready';
                         }
                         break;
                 }
