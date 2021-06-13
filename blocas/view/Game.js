@@ -234,7 +234,11 @@ Game.addBlocks = function (game) {
             if(blocks[i][j] !== -1) {
                 blockIndex++;
                 spriteAll.push(new Sprite(20, 20));
-                spriteAll[blockIndex].frame = blocks[i][j];
+                if(game.previous && game.previous.some(p => p.posX === j && p.posY === i)) {
+                    spriteAll[blockIndex].frame = blocks[i][j] + 4;
+                } else {
+                    spriteAll[blockIndex].frame = blocks[i][j];
+                }
                 spriteAll[blockIndex].x = startX + j * 20;
                 spriteAll[blockIndex].y = startY + i * 20;
                 spriteAll[blockIndex].image = this.core.assets['view/block.png'];
@@ -243,6 +247,7 @@ Game.addBlocks = function (game) {
     }
     spriteAll.forEach(s => this.core.rootScene.addChild(s));    
 }
+
 
 Game.calcJustXY = function (x, y) {
     var retX = 0;
@@ -312,6 +317,7 @@ Game.onLoad = function () {
           , 'view/block20.png'
           , 'view/priority.png'
           , 'view/active.png'
+          , 'view/finish-button.png'
     );
 
     this.core.onload = function () {
@@ -416,19 +422,20 @@ Game.addCommand = function (game) {
         this.addReadyCommand(game);
     } else {
         if(Game.hasPriorityUid(game, uid)) {
-            this.addSprite('view/button.png', 5, 420, 722, 80, 25, function () { // 回転
+            this.addLabel('ブロックをドラッグ＆ドロップで配置して[決定]', 370, 590, '12px');
+            this.addSprite('view/button.png', 5, 370, 722, 80, 25, function () { // 回転
                 Game.send('g');
             });
-            this.addSprite('view/button.png', 6, 510, 722, 80, 25, function () { // 反転
+            this.addSprite('view/button.png', 6, 460, 722, 80, 25, function () { // 反転
                 Game.send('h');
             });
-            this.addSprite('view/button.png', 3, 420, 757, 80, 25, function () { // 決定
+            this.addSprite('view/button.png', 3, 550, 722, 80, 25, function () { // 決定
                 if(Game.candidate && Game.candidate.length !== 0) {
                     Game.send('i' + Game.candidatePos.join(' '));
                 }
             });
-            this.addSprite('view/button.png', 7, 510, 757, 80, 25, function () { // 終了
-                Game.send('j');
+            this.addSprite('view/finish-button.png', 0, 350, 50, 290, 25, function () { // 終了
+               Game.send('j');
             });
         }
     }
