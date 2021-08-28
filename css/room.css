@@ -93,6 +93,12 @@ body {
     font: bold 16px "メイリオ","Meiryo";
     text-align: center;
 }
+#isAuth {
+    padding: 10px 0 10px 0;
+    color: red;
+    font: bold 16px "メイリオ","Meiryo";
+    text-align: center;
+}
 
 #login-user-list {
     margin: 0 0 0 86px;
