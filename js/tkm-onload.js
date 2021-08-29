@@ -128,6 +128,10 @@ window.onload = function () {
             }
         }
 
+        if(document.getElementById('isAuth')) {
+            document.getElementById('isAuth').innerHTML = `<h3>認証卓の使い方</h3><ol><li>[ユーザー名#password]の形でログインしてください。</li><li>ログイン後チャットに[/grant]と入力して管理者権限を取得してください。</li><li>他のユーザーは管理者と同じパスワードを使ってログインできます。</li></ol>`
+        }
+
         document.getElementById('play-select-volume').selectedIndex = 2;
 
         document.getElementById('play-select-volume').onchange = function () {
