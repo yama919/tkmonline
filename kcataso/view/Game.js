@@ -102,6 +102,7 @@ Game.onLoad = function () {
         , 'view/dice-selecting.png'
         , 'view/merchant.png'
         , 'view/tmpSettlements.png'
+        , 'view/market.png'
     );
 
     this.core.onload = function () {
@@ -213,6 +214,11 @@ Game.addSetupOption = function(game) {
     if(game.setup === Option.RANDOM_SETUP) { frame = 1; }
 
     this.addSprite('view/signpost.png', frame, 2, 2, 30, 30);
+
+    var hiddenFrame = 0;
+    if(game.hidden) { hiddenFrame = 1; }
+
+    this.addSprite('view/market.png', hiddenFrame, 34, 2, 30, 30);
 }
 
 Game.addHeadLine = function (game) {
@@ -3642,89 +3648,91 @@ Game.hasPriorityUid = function (game, uid) {
 }
 
 Game.addStock = function (game) {
-    var i;
-    var len1 = game.resourceStock.length;
-    for (i = 0; i < len1; i++) {
-        if (game.resourceStock[i] > 0) {
-            if (i >= Resource.CLOTH) {
-                var sprite = new Sprite(24, 24);
-                var spriteB = new Sprite(11, 23);
-                sprite.y = 44;
-                spriteB.y = 45;
-                var resourceMax = 12;
-            } else {
-                var sprite = new Sprite(24, 38);
-                sprite.y = 30;
-                var resourceMax = 19;
-            }
-           
-            this.addLabel(String(resourceMax-game.resourceStock[i]), i * 27 + 117, 70);
-            if(spriteB) {
-                sprite.x = i * 27 + 110;
-                sprite.image = new Surface(24, 38);
-                sprite.image.context.fillStyle = 'rgb(255,255,255)';
-                sprite.image.context.fillRect(0, 0, 24, 38);
-                spriteB.x = i * 27 + 122;
-                spriteB.image = new Surface(11, 30);
-                spriteB.image.context.fillStyle = 'rgb(255,255,255)';
-                spriteB.image.context.fillRect(0, 0, 11, 38);
-            } else {
-                sprite.x = i * 27 + 110;
-                sprite.image = new Surface(24, 38);
-                sprite.image.context.fillStyle = 'rgb(255,255,255)';
-                sprite.image.context.fillRect(0, 0, 24, 38);
-            }
+    if (!game.hidden) {
+        var i;
+        var len1 = game.resourceStock.length;
+        for (i = 0; i < len1; i++) {
+            if (game.resourceStock[i] > 0) {
+                if (i >= Resource.CLOTH) {
+                    var sprite = new Sprite(24, 24);
+                    var spriteB = new Sprite(11, 23);
+                    sprite.y = 44;
+                    spriteB.y = 45;
+                    var resourceMax = 12;
+                } else {
+                    var sprite = new Sprite(24, 38);
+                    sprite.y = 30;
+                    var resourceMax = 19;
+                }
             
-            switch (i) {
-                case Resource.BRICK:
-                    sprite.image.context.fillStyle = 'rgb(136,0,21)';
-                    this.addLabel('土', i * 27 + 115, 10);
-                    break;
-                case Resource.WOOL:
-                    sprite.image.context.fillStyle = 'rgb(181,230,29)';
-                    this.addLabel('羊', i * 27 + 115, 10);
-                    break;
-                case Resource.ORE:
-                    sprite.image.context.fillStyle = 'rgb(127,127,127)';
-                    this.addLabel('鉄', i * 27 + 115, 10);
-                    break;
-                case Resource.GRAIN:
-                    sprite.image.context.fillStyle = 'rgb(255,242,0)';
-                    this.addLabel('麦', i * 27 + 115, 10);
-                    break;
-                case Resource.LUMBER:
-                    sprite.image.context.fillStyle = 'rgb(34,177,76)';
-                    this.addLabel('木', i * 27 + 115, 10);
-                    break;
-                case Resource.CLOTH:
-                    sprite.image.context.fillStyle = 'rgb(150,91,2)';
-                    spriteB.image.context.fillStyle = 'rgb(249,149,3)';
-                    this.addLabel('服', i * 27 + 115, 10);
-                    break;
-                case Resource.COIN:
-                    sprite.image.context.fillStyle = 'rgb(32,161,161)';
-                    spriteB.image.context.fillStyle = 'rgb(0,255,255)';
-                    this.addLabel('貨', i * 27 + 115, 10);
-                    break;
-                case Resource.PAPER:
-                    sprite.image.context.fillStyle = 'rgb(118,168,67)';
-                    spriteB.image.context.fillStyle = 'rgb(0,255,0)';
-                    this.addLabel('紙', i * 27 + 115, 10);
-                    break;
-            }
-            if (i >= Resource.CLOTH) {
-                sprite.image.context.fillRect(0, 24 - game.resourceStock[i] * 2, 24, 13 + game.resourceStock[i] * 2);
-                spriteB.image.context.fillRect(0, 23 - game.resourceStock[i] * 2, 24, 13 + game.resourceStock[i] * 2);
-                // spriteB.image.context.strokeRect(0, 0, 12, 38);
-                sprite.image.context.strokeRect(0, 0, 24, 38);
-                this.core.rootScene.addChild(sprite);
-                this.core.rootScene.addChild(spriteB);
-            } else {
-                sprite.image.context.fillRect(0, 38 - game.resourceStock[i] * 2, 24, game.resourceStock[i] * 2);
-                sprite.image.context.strokeRect(0, 0, 24, 38);
-                this.core.rootScene.addChild(sprite);
-            }
+                this.addLabel(String(resourceMax-game.resourceStock[i]), i * 27 + 117, 70);
+                if(spriteB) {
+                    sprite.x = i * 27 + 110;
+                    sprite.image = new Surface(24, 38);
+                    sprite.image.context.fillStyle = 'rgb(255,255,255)';
+                    sprite.image.context.fillRect(0, 0, 24, 38);
+                    spriteB.x = i * 27 + 122;
+                    spriteB.image = new Surface(11, 30);
+                    spriteB.image.context.fillStyle = 'rgb(255,255,255)';
+                    spriteB.image.context.fillRect(0, 0, 11, 38);
+                } else {
+                    sprite.x = i * 27 + 110;
+                    sprite.image = new Surface(24, 38);
+                    sprite.image.context.fillStyle = 'rgb(255,255,255)';
+                    sprite.image.context.fillRect(0, 0, 24, 38);
+                }
+                
+                switch (i) {
+                    case Resource.BRICK:
+                        sprite.image.context.fillStyle = 'rgb(136,0,21)';
+                        this.addLabel('土', i * 27 + 115, 10);
+                        break;
+                    case Resource.WOOL:
+                        sprite.image.context.fillStyle = 'rgb(181,230,29)';
+                        this.addLabel('羊', i * 27 + 115, 10);
+                        break;
+                    case Resource.ORE:
+                        sprite.image.context.fillStyle = 'rgb(127,127,127)';
+                        this.addLabel('鉄', i * 27 + 115, 10);
+                        break;
+                    case Resource.GRAIN:
+                        sprite.image.context.fillStyle = 'rgb(255,242,0)';
+                        this.addLabel('麦', i * 27 + 115, 10);
+                        break;
+                    case Resource.LUMBER:
+                        sprite.image.context.fillStyle = 'rgb(34,177,76)';
+                        this.addLabel('木', i * 27 + 115, 10);
+                        break;
+                    case Resource.CLOTH:
+                        sprite.image.context.fillStyle = 'rgb(150,91,2)';
+                        spriteB.image.context.fillStyle = 'rgb(249,149,3)';
+                        this.addLabel('服', i * 27 + 115, 10);
+                        break;
+                    case Resource.COIN:
+                        sprite.image.context.fillStyle = 'rgb(32,161,161)';
+                        spriteB.image.context.fillStyle = 'rgb(0,255,255)';
+                        this.addLabel('貨', i * 27 + 115, 10);
+                        break;
+                    case Resource.PAPER:
+                        sprite.image.context.fillStyle = 'rgb(118,168,67)';
+                        spriteB.image.context.fillStyle = 'rgb(0,255,0)';
+                        this.addLabel('紙', i * 27 + 115, 10);
+                        break;
+                }
+                if (i >= Resource.CLOTH) {
+                    sprite.image.context.fillRect(0, 24 - game.resourceStock[i] * 2, 24, 13 + game.resourceStock[i] * 2);
+                    spriteB.image.context.fillRect(0, 23 - game.resourceStock[i] * 2, 24, 13 + game.resourceStock[i] * 2);
+                    // spriteB.image.context.strokeRect(0, 0, 12, 38);
+                    sprite.image.context.strokeRect(0, 0, 24, 38);
+                    this.core.rootScene.addChild(sprite);
+                    this.core.rootScene.addChild(spriteB);
+                } else {
+                    sprite.image.context.fillRect(0, 38 - game.resourceStock[i] * 2, 24, game.resourceStock[i] * 2);
+                    sprite.image.context.strokeRect(0, 0, 24, 38);
+                    this.core.rootScene.addChild(sprite);
+                }
 
+            }
         }
     }
 

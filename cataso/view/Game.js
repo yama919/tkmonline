@@ -80,6 +80,7 @@ Game.onLoad = function () {
         , 'view/dice.png'
         , 'view/signpost.png'
         , 'view/resource-name.png'
+        , 'view/market.png'
     );
 
     this.core.onload = function () {
@@ -154,6 +155,11 @@ Game.addSetupOption = function(game) {
     if(game.setup === Option.RANDOM_SETUP) { frame = 1; }
 
     this.addSprite('view/signpost.png', frame, 2, 2, 30, 30);
+
+    var hiddenFrame = 0;
+    if(game.hidden) { hiddenFrame = 1; }
+
+    this.addSprite('view/market.png', hiddenFrame, 34, 2, 30, 30);
 }
 
 Game.addHeadLine = function (game) {
@@ -1668,44 +1674,46 @@ Game.hasPriorityUid = function (game, uid) {
 }
 
 Game.addStock = function (game) {
-    var i;
-    var len1 = game.resourceStock.length;
-    for (i = 0; i < len1; i++) {
-        if (game.resourceStock[i] > 0) {
-            var sprite = new Sprite(48, 38);
-            this.addSprite('view/resource-name.png', i, i * 51 + 106, 10, 15, 20);
-            this.addLabel(String(19-game.resourceStock[i]), i * 51 + 108, 70);
-
-            sprite.y = 30;
-            sprite.x = i * 51 + 90;
-            sprite.image = new Surface(48, 38);
-            sprite.image.context.fillStyle = 'rgb(255,255,255)';
-            sprite.image.context.fillRect(0, 0, 48, 38);
-
-            
-            
-            switch (i) {
-                case Resource.BRICK:
-                    sprite.image.context.fillStyle = 'rgb(136,0,21)';
-                    break;
-                case Resource.WOOL:
-                    sprite.image.context.fillStyle = 'rgb(181,230,29)';
-                    break;
-                case Resource.ORE:
-                    sprite.image.context.fillStyle = 'rgb(127,127,127)';
-                    break;
-                case Resource.GRAIN:
-                    sprite.image.context.fillStyle = 'rgb(255,242,0)';
-                    break;
-                case Resource.LUMBER:
-                    sprite.image.context.fillStyle = 'rgb(34,177,76)';
-                    break;
+    if (!game.hidden) {
+        var i;
+        var len1 = game.resourceStock.length;
+        for (i = 0; i < len1; i++) {
+            if (game.resourceStock[i] > 0) {
+                var sprite = new Sprite(48, 38);
+                this.addSprite('view/resource-name.png', i, i * 51 + 106, 10, 15, 20);
+                this.addLabel(String(19-game.resourceStock[i]), i * 51 + 108, 70);
+    
+                sprite.y = 30;
+                sprite.x = i * 51 + 90;
+                sprite.image = new Surface(48, 38);
+                sprite.image.context.fillStyle = 'rgb(255,255,255)';
+                sprite.image.context.fillRect(0, 0, 48, 38);
+    
+                
+                
+                switch (i) {
+                    case Resource.BRICK:
+                        sprite.image.context.fillStyle = 'rgb(136,0,21)';
+                        break;
+                    case Resource.WOOL:
+                        sprite.image.context.fillStyle = 'rgb(181,230,29)';
+                        break;
+                    case Resource.ORE:
+                        sprite.image.context.fillStyle = 'rgb(127,127,127)';
+                        break;
+                    case Resource.GRAIN:
+                        sprite.image.context.fillStyle = 'rgb(255,242,0)';
+                        break;
+                    case Resource.LUMBER:
+                        sprite.image.context.fillStyle = 'rgb(34,177,76)';
+                        break;
+                }
+                
+                sprite.image.context.fillRect(0, 38 - game.resourceStock[i] * 2, 48, game.resourceStock[i] * 2);
+                sprite.image.context.strokeRect(0, 0, 48, 38);
+    
+                this.core.rootScene.addChild(sprite);
             }
-            
-            sprite.image.context.fillRect(0, 38 - game.resourceStock[i] * 2, 48, game.resourceStock[i] * 2);
-            sprite.image.context.strokeRect(0, 0, 48, 38);
-
-            this.core.rootScene.addChild(sprite);
         }
     }
     
