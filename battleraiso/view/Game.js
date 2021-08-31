@@ -639,12 +639,16 @@ Game.score = function (weather, formation) {
                 straight += j;
                 i++;
             } else {
-                if (companion > 0 && j === 8) {
+                if (companion > 0 && j === 8) { // 最大が9でかつ援軍がある場合
+                    // 援軍を利用
                     companion--;
+                    // 7（カードの表示数値は8)を加算
                     j -= 1;
                     straight += j;
-                } else if (shield > 0 && (j === 3 || j === 2 || j === 1)) {
+                } else if (shield > 0 && (j === 3 || j === 2 || j === 1)) { // 最大が4, 3, 2の場合で盾がある場合
+                    // 盾を使う
                     shield--;
+                    // 3,2,1のどれかで利用する
                     j -= 1;
                     straight += j;
                 } else if (leader > 0) {
@@ -658,48 +662,49 @@ Game.score = function (weather, formation) {
             }
         }
 
-        if (isStraight && companion > 0) {
+        if (isStraight && companion > 0) { // 援軍がまだ残っている場合（例えば[援軍, 7, 6]等)
             if (k + 1 === 7) {
+                // 部隊カードの最大数値が7の場合, 7(部隊カードとしては8)を加算
                 k++;
                 straight += k;
-            } else if (k + 2 === 7 && leader >= 1) {
+            } else if (k + 2 === 7 && leader >= 1) { // 隊長が残っている場合で、最大数値が6の場合[援軍、隊長、6]
                 leader--;
                 k += 2;
-                straight += k;
-            } else if (k + 3 === 7 && leader >= 2) {
+                straight += k + 6; // 援軍と隊長(6)を加算
+            } else if (k + 3 === 7 && leader >= 2) { // 隊長が2枚残っている場合で、最大値が5の場合[援軍(7)、隊長(6)、隊長(5)、5(4)] あり得る？？
                 leader -= 2;
                 k += 3;
-                straight += k;
-            } else if (l - 1 === 7) {
+                straight += k + 5 + 6; // 援軍と隊長(6)(5)を加算
+            } else if (l - 1 === 7) { // 最小が9の場合、[10, 9, 援軍]
                 l--;
                 straight += l;
-            } else if (l - 2 === 7 && leader > 0) {
+            } else if (l - 2 === 7 && leader > 0) { // 最小が10で隊長を持っている場合、[10, 隊長, 援軍]
                 leader--;
                 l -= 2;
-                straight += l;
+                straight += l + 8; // 援軍と隊長(8)を加算
             } else {
                 isStraight = false;
             }
         }
         if (isStraight && shield > 0) {
-            if (k + 1 === 1 || k + 1 === 2) {
+            if (k + 1 === 1 || k + 1 === 2) { // 最大が1か2の場合、[盾, 2, 1], [盾, 1], [盾, 2]...
                 k++;
                 straight += k;
-            } else if (k + 2 === 2 && leader >= 1) {
+            } else if (k + 2 === 2 && leader >= 1) {  // 最大が1で隊長あり [1, 盾, 隊長]
                 leader--;
                 k += 2;
-                straight += k;
-            } else if (l - 1 === 0 || l - 1 === 1 || l - 1 === 2) {
+                straight += k + 1;
+            } else if (l - 1 === 0 || l - 1 === 1 || l - 1 === 2) { // 最小が2, 3, 4 [3, 2, 盾],[4, 3, 盾],[5, 4, 盾]
                 l--;
                 straight += l;
-            } else if (l - 2 === 2 && leader >= 1) {
+            } else if (l - 2 === 2 && leader >= 1) { // 最小が5で隊長あり [盾, 隊長, 5], [6, 5, 盾, 隊長]
                 leader--;
                 l -= 2;
-                straight += l;
-            } else if (l - 3 === 2 && leader >= 2) {
+                straight += l + 3;
+            } else if (l - 3 === 2 && leader >= 2) { // 最小が6で隊長2以上 [6, 隊長, 隊長, 盾]
                 leader -= 2;
                 l -= 3;
-                straight += l;
+                straight += l + 3 + 4;
             } else {
                 isStraight = false;
             }
