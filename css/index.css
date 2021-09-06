@@ -121,8 +121,8 @@ body {
     background-repeat: no-repeat;
     background-position: center;
 	position:absolute;
-	top: 140px;
-    right: -5px;
+	top: 145px;
+    left: 135px;
     /* background-color: white; */
     height: 20px;
     width: 35px;
