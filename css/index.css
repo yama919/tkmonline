@@ -113,6 +113,32 @@ body {
     border-top-right-radius: 10px;
 }
 
+.relative {
+    position: relative;
+}
+
+.locked, .unlocked {
+    background-repeat: no-repeat;
+    background-position: center;
+	position:absolute;
+	top: 140px;
+    right: -5px;
+    /* background-color: white; */
+    height: 20px;
+    width: 35px;
+    text-align: center;
+    line-height: 1.4;
+    border-bottom-right-radius: 10px;
+}
+
+.unlocked {
+    background-image: url(../png/unlocked.png);
+}
+
+.locked {
+    background-image: url(../png/locked.png);
+}
+
 .cataso-ready {
     background-image: url(../png/cataso-ready.png);
     height: 140px;
