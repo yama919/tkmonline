@@ -67,6 +67,11 @@ window.onload = function () {
                    this.value !== ''
                 && (event.which === 13 || event.keyCode === 13)
             ) {
+                var mention = document.getElementById('mention');
+                if(mention && mention.value) {
+                    var uid = '@' + mention.value;
+                    this.value = uid + ' ' + this.value;
+                }
                 Tkm.send('c' + this.value);
                 this.value = '';
             }
