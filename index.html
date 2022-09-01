@@ -6,6 +6,7 @@
     <title>Tkm&nbsp;Online</title>
     <link rel="stylesheet" href="./css/html5reset-1.6.1.css" />
     <link rel="stylesheet" href="./css/index.css" />
+    <script src="./js/reconnecting-websocket.min.js"></script>
 </head>
 
 <body>
@@ -525,16 +526,23 @@
     </div>
     <script src="js/const.js"></script>
     <script>
-        var ws = new WebSocket(WSURL);
+        var ws = new ReconnectingWebSocket(WSURL);
+        var interval;
 
         ws.onopen = function () {
             ws.send(String.fromCharCode(100));
 
-            setInterval(
+            interval = setInterval(
                 function () {
                     ws.send(String.fromCharCode(100));
                 }, 5000
             );
+        }
+
+        ws.onclose = function () {
+            clearInterval(interval);
+            interval = 0;
+            console.debug('CLOSE WEBSOCKET');
         }
 
         ws.onmessage = function (e) {

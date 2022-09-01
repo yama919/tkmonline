@@ -143,11 +143,19 @@ window.onload = function () {
             Tkm.volume = parseFloat(this.value);
         }
 
-        Tkm.ws = new WebSocket(Tkm.wsurl);
+        Tkm.ws = new ReconnectingWebSocket(Tkm.wsurl);
     })();
 
     Tkm.ws.onopen = function () {
+        const uid = Tkm.view.uid
+        if (uid) {
+            Tkm.send('b' + uid);
+        }
         Tkm.send('a');
+    }
+
+    Tkm.ws.onclose = function (e) {
+        console.debug("WEBSOCKET CLOSED", e);
     }
 
     Tkm.ws.onmessage = function (event) {
