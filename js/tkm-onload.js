@@ -58,6 +58,7 @@ window.onload = function () {
 
         document.getElementById('login-button').onclick = function () {
             var uid = document.getElementById('login-input-uid').value;
+            Tkm.view.loginName = uid;
 
             if (uid !== '') { Tkm.send('b' + uid); }
         }
@@ -147,15 +148,15 @@ window.onload = function () {
     })();
 
     Tkm.ws.onopen = function () {
-        const uid = Tkm.view.uid
-        if (uid) {
-            Tkm.send('b' + uid);
+        const loginName = Tkm.view.loginName
+        if (loginName) {            
+            Tkm.send('b' + loginName);
         }
-        Tkm.send('a');
+        Tkm.send('a');        
     }
 
     Tkm.ws.onclose = function (e) {
-        console.debug("WEBSOCKET CLOSED", e);
+        console.debug("WEBSOCKET CLOSED", Tkm.view);
     }
 
     Tkm.ws.onmessage = function (event) {
