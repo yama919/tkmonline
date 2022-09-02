@@ -152,6 +152,11 @@ window.onload = function () {
         if (loginName) {            
             Tkm.send('b' + loginName);
         }
+        const uid = Tkm.view.uid;
+        const cid = Tkm.view.cid;
+        if (uid === cid) {
+            Tkm.send('g' + '/sgrant');
+        }
         Tkm.send('a');        
     }
 
