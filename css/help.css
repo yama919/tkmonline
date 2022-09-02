@@ -132,3 +132,16 @@ td:nth-child(2), th:nth-child(2) {
   .hexagon::after {
     transform: rotate(-60deg);
   }
+
+  .button {
+    margin-bottom: 5px;
+    color: white;
+    background: green;
+    text-align: center;
+    border-radius: 5px;
+  }
+
+  .button:hover {
+      cursor: pointer;
+      opacity: 0.6;
+  }
