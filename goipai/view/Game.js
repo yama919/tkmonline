@@ -62,6 +62,12 @@ Game.send = function (message) {
     }
 }
 
+Game.sendCommand = function (message, can = true) {
+    if (can) {
+        sendCommand(message);
+    }
+}
+
 Game.addLabel = function (text, x, y, font, color) {
     if (!font) {
         font = '14px "メイリオ",Meiryo';

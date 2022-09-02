@@ -14,6 +14,12 @@ Game.send = function (message) {
     }
 }
 
+Game.sendCommand = function (message, can = true) {
+    if (can) {
+        sendCommand(message);
+    }
+}
+
 Game.addLabel = function (text, x, y, font, color) {
     if (!font) {
         font = '14px "メイリオ",Meiryo';
@@ -83,7 +89,11 @@ Game.onMessage = function (game) {
     this.removeAll();
     this.addSprite('view/background.png', 0, 0, 0, 800, 545);
     this.addSprite('view/mode.png', game.setup, 775, 3, 20, 20, function () {
-        prompt("", JSON.stringify(game));
+        var cmd = '/basic';
+        if (game.setup === Mode.BASIC) {
+            cmd = '/advance';
+        }
+         Game.sendCommand(cmd)
     });
     this.addHeadLine(game);
     this.addCommand(game);

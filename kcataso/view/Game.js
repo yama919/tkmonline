@@ -24,6 +24,12 @@ Game.send = function (message) {
     }
 }
 
+Game.sendCommand = function (message, can = true) {
+    if (can) {
+        sendCommand(message);
+    }
+}
+
 Game.addLabel = function (text, x, y, font, color) {
     if (!font) {
         font = '14px "メイリオ",Meiryo';
@@ -213,12 +219,25 @@ Game.addSetupOption = function(game) {
 
     if(game.setup === Option.RANDOM_SETUP) { frame = 1; }
 
-    this.addSprite('view/signpost.png', frame, 2, 2, 30, 30);
+    this.addSprite('view/signpost.png', frame, 2, 2, 30, 30, function () { 
+        var cmd = '/random'
+        if (frame === 1) {
+            cmd = '/alphabet'
+        }
+        Game.sendCommand(cmd)
+    });
 
     var hiddenFrame = 0;
     if(game.hidden) { hiddenFrame = 1; }
 
-    this.addSprite('view/market.png', hiddenFrame, 34, 2, 30, 30);
+    this.addSprite('view/market.png', hiddenFrame, 34, 2, 30, 30, function () { 
+        var cmd = '/close'
+        if (hiddenFrame === 1) {
+            cmd = '/open'
+        }
+        Game.sendCommand(cmd)
+    });
+
 }
 
 Game.addHeadLine = function (game) {

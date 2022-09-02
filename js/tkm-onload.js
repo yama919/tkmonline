@@ -134,6 +134,25 @@ window.onload = function () {
             }
         }
 
+        var grantElem = document.getElementById('grant');
+        if (grantElem) {
+            grantElem.onclick = function () {
+                Tkm.send('c' + '/grant');
+            }
+        }
+        var grantElem = document.getElementById('revoke');
+        if (grantElem) {
+            grantElem.onclick = function () {
+                Tkm.send('c' + '/revoke');
+            }
+        }
+        var grantElem = document.getElementById('game-reset');
+        if (grantElem) {
+            grantElem.onclick = function () {
+                Tkm.send('c' + '/reset');
+            }
+        }
+
         if(document.getElementById('isAuth')) {
             document.getElementById('isAuth').innerHTML = `<h3>認証卓の使い方</h3><ol><li>[ユーザー名#password]の形でログインしてください。</li><li>ログイン後チャットに[/grant]と入力して管理者権限を取得してください。</li><li>他のユーザーは管理者と同じパスワードを使ってログインできます。</li></ol>`
         }
