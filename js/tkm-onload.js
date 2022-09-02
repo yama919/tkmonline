@@ -155,7 +155,7 @@ window.onload = function () {
         const uid = Tkm.view.uid;
         const cid = Tkm.view.cid;
         if (uid === cid) {
-            Tkm.send('g' + '/sgrant');
+            Tkm.send('g');
         }
         Tkm.send('a');        
     }
