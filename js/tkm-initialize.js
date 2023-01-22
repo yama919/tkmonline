@@ -118,9 +118,9 @@ Tkm.updateUserList = function () {
 
         html += '<span class="uid">' + token[0] + '</span>';
 
-        if (token.length > 1) {
-            html += '◆<span class="trip">' + token[1] + '</span>';
-        }
+        // if (token.length > 1) {
+        //     html += '◆<span class="trip">' + token[1] + '</span>';
+        // }
 
         html += '</div>'
     }
