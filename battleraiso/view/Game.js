@@ -1,6 +1,6 @@
 enchant();
 
-var Game = function () { }
+var Game = function () {};
 
 Game.isOpen = false;
 Game.canSend = true;
@@ -12,13 +12,13 @@ Game.send = function (message) {
         send(message);
         this.canSend = false;
     }
-}
+};
 
 Game.sendCommand = function (message, can = true) {
     if (can) {
         sendCommand(message);
     }
-}
+};
 
 Game.addLabel = function (text, x, y, font, color) {
     if (!font) {
@@ -33,12 +33,14 @@ Game.addLabel = function (text, x, y, font, color) {
     label.y = y;
     label.font = font;
 
-    if (color || color === 0) { label.color = color; }
+    if (color || color === 0) {
+        label.color = color;
+    }
 
     this.core.rootScene.addChild(label);
 
     return label;
-}
+};
 
 Game.addSprite = function (image, frame, x, y, width, height, onTouch, opacity) {
     var sprite = new Sprite(width, height);
@@ -48,13 +50,17 @@ Game.addSprite = function (image, frame, x, y, width, height, onTouch, opacity) 
     sprite.x = x;
     sprite.y = y;
 
-    if (onTouch) { sprite.addEventListener('touchstart', onTouch); }
-    if (opacity || opacity === 0) { sprite.opacity = opacity; }
+    if (onTouch) {
+        sprite.addEventListener('touchstart', onTouch);
+    }
+    if (opacity || opacity === 0) {
+        sprite.opacity = opacity;
+    }
 
     this.core.rootScene.addChild(sprite);
 
     return sprite;
-}
+};
 
 Game.onLoad = function () {
     this.core = new Core(800, 545);
@@ -62,28 +68,30 @@ Game.onLoad = function () {
     this.core.fps = 5;
 
     this.core.preload(
-          'view/background.png'
-        , 'view/button.png'
-        , 'view/active.png'
-        , 'view/priority.png'
-        , 'view/card.png'
-        , 'view/flag.png'
-        , 'view/touch.png'
-        , 'view/before.png'
-        , 'view/mode.png'
+        'view/background.png',
+        'view/button.png',
+        'view/active.png',
+        'view/priority.png',
+        'view/card.png',
+        'view/flag.png',
+        'view/touch.png',
+        'view/before.png',
+        'view/mode.png'
     );
 
     this.core.onload = function () {
         Game.isOpen = true;
         Game.send('a');
-    }
+    };
 
     this.core.start();
-}
+};
 
 Game.onMessage = function (game) {
     Game.current = game;
-    if (game.sound !== '') { sound(game.sound); }
+    if (game.sound !== '') {
+        sound(game.sound);
+    }
 
     this.canSend = true;
     this.removeAll();
@@ -93,7 +101,7 @@ Game.onMessage = function (game) {
         if (game.setup === Mode.BASIC) {
             cmd = '/advance';
         }
-         Game.sendCommand(cmd)
+        Game.sendCommand(cmd);
     });
     this.addHeadLine(game);
     this.addCommand(game);
@@ -108,24 +116,26 @@ Game.onMessage = function (game) {
     this.addTouch(game);
     this.addTroopDeck(game);
     this.addTacticsDeck(game);
-    
+
     var i;
-    for (i = 0; i < 2; i++) { this.addPlayer(game, i); }
-}
+    for (i = 0; i < 2; i++) {
+        this.addPlayer(game, i);
+    }
+};
 
 Game.onDownloadLog = function () {
     return Game.current;
-}
+};
 
 Game.removeAll = function () {
     while (this.core.rootScene.childNodes.length > 0) {
         this.core.rootScene.removeChild(this.core.rootScene.childNodes[0]);
     }
-}
+};
 
 Game.addHeadLine = function (game) {
     var text = '';
-    
+
     if (game.state === State.READY) {
         text = '募集中';
     } else {
@@ -161,16 +171,15 @@ Game.addHeadLine = function (game) {
                 break;
         }
     }
-    
+
     this.addLabel(text, 665, 5);
-}
+};
 
 Game.addCommand = function (game) {
     if (game.state === State.READY) {
         this.addReadyCommand(game);
-    } else if(game.playerList[game.active].uid === uid) {
-        switch (game.phase)
-        {
+    } else if (game.playerList[game.active].uid === uid) {
+        switch (game.phase) {
             case Phase.STARTUP:
             case Phase.TROOP:
                 this.addLabel('旗獲得かプレイ', 682, 290);
@@ -215,23 +224,23 @@ Game.addCommand = function (game) {
                 break;
         }
 
-        if(
-               game.phase === Phase.STARTUP
-            || game.phase === Phase.ALEXANDER
-            || game.phase === Phase.DARIUS
-            || game.phase === Phase.COMPANION
-            || game.phase === Phase.SHIELD
-            || game.phase === Phase.FOG
-            || game.phase === Phase.MUD
-            || game.phase === Phase.SCOUT1
-            || game.phase === Phase.REDEPLOY1
-            || game.phase === Phase.DESERTER
-            || game.phase === Phase.TRAITOR1
+        if (
+            game.phase === Phase.STARTUP ||
+            game.phase === Phase.ALEXANDER ||
+            game.phase === Phase.DARIUS ||
+            game.phase === Phase.COMPANION ||
+            game.phase === Phase.SHIELD ||
+            game.phase === Phase.FOG ||
+            game.phase === Phase.MUD ||
+            game.phase === Phase.SCOUT1 ||
+            game.phase === Phase.REDEPLOY1 ||
+            game.phase === Phase.DESERTER ||
+            game.phase === Phase.TRAITOR1
         ) {
             this.addPassCommand(game);
         }
     }
-}
+};
 
 Game.addReadyCommand = function (game) {
     var canJoin = false;
@@ -244,14 +253,13 @@ Game.addReadyCommand = function (game) {
         if (game.playerList[i].uid === '') {
             canJoin = true;
         } else {
-            if (game.playerList[i].uid === uid) { canLeave = true; }
+            if (game.playerList[i].uid === uid) {
+                canLeave = true;
+            }
         }
     }
 
-    if (
-           game.playerList[0].uid !== ''
-        && game.playerList[1].uid !== ''
-    ) {
+    if (game.playerList[0].uid !== '' && game.playerList[1].uid !== '') {
         canStart = true;
     }
 
@@ -272,7 +280,7 @@ Game.addReadyCommand = function (game) {
             });
         }
     }
-}
+};
 
 Game.addPassCommand = function (game) {
     var player = game.playerList[game.active];
@@ -281,7 +289,7 @@ Game.addPassCommand = function (game) {
     var i;
     var len1 = player.hand.length;
     for (i = 0; !hasTroop && i < len1; i++) {
-        if((player.hand[i] & 0xff00) !== 0x0600) {
+        if ((player.hand[i] & 0xff00) !== 0x0600) {
             hasTroop = true;
         }
     }
@@ -291,7 +299,7 @@ Game.addPassCommand = function (game) {
             Game.send('r');
         });
     }
-}
+};
 
 Game.addRedeploy2Command = function (game) {
     this.addLabel('カードの移動か除外', 666, 290);
@@ -301,7 +309,7 @@ Game.addRedeploy2Command = function (game) {
             Game.send('m-1');
         });
     }
-}
+};
 
 Game.addPlayer = function (game, color) {
     if (game.state === State.PLAYING) {
@@ -312,37 +320,40 @@ Game.addPlayer = function (game, color) {
     }
 
     this.addLabel(game.playerList[color].uid, 687, color * 78 + 27);
-    if(game.playerList[color].time) {
+    if (game.playerList[color].time) {
         this.addLabel('時間: ' + this.toHms(game.playerList[color].time), 663, color * 78 + 85);
+    }
+    if (game.timeout) {
+        this.addLabel(' /' + game.timeout.toString() + '分', 755, color * 78 + 85);
     }
 
     this.addLabel('戦術 ' + game.playerList[color].count + '枚', 678, color * 78 + 56, '22px');
-}
+};
 
 Game.toHms = function (t) {
-	var hms = "";
-	var h = t / 3600 | 0;
-	var m = t % 3600 / 60 | 0;
-	var s = t % 60;
+    var hms = '';
+    var h = (t / 3600) | 0;
+    var m = ((t % 3600) / 60) | 0;
+    var s = t % 60;
 
-	if (h != 0) {
-		hms = h + "時間" + padZero(m) + "分" + padZero(s) + "秒";
-	} else if (m != 0) {
-		hms = m + "分" + padZero(s) + "秒";
-	} else {
-		hms = s + "秒";
-	}
+    if (h != 0) {
+        hms = h + '時間' + padZero(m) + '分' + padZero(s) + '秒';
+    } else if (m != 0) {
+        hms = m + '分' + padZero(s) + '秒';
+    } else {
+        hms = s + '秒';
+    }
 
-	return hms;
+    return hms;
 
-	function padZero(v) {
-		if (v < 10) {
-			return "0" + v;
-		} else {
-			return v;
-		}
-	}
-}
+    function padZero(v) {
+        if (v < 10) {
+            return '0' + v;
+        } else {
+            return v;
+        }
+    }
+};
 
 Game.canPlayTroop = function (game, color) {
     var targetPlayer = game.playerList[color];
@@ -351,17 +362,14 @@ Game.canPlayTroop = function (game, color) {
     var i;
     var len1 = game.flagList.length;
     for (i = 0; !result && i < len1; i++) {
-        if (
-               game.flagList[i] === Index.NONE
-            && targetPlayer.field[i].length < game.size[i]
-        ) {
+        if (game.flagList[i] === Index.NONE && targetPlayer.field[i].length < game.size[i]) {
             result = true;
             break;
         }
     }
 
     return result;
-}
+};
 
 Game.addHand = function (game, color) {
     var targetPlayer = game.playerList[color];
@@ -382,10 +390,7 @@ Game.addHand = function (game, color) {
     var canPlayRedeploy = false;
 
     for (i = 0; i < len1; i++) {
-        if (
-               game.flagList[i] === Index.NONE
-            && targetPlayer.field[i].length > 0
-        ) {
+        if (game.flagList[i] === Index.NONE && targetPlayer.field[i].length > 0) {
             canPlayRedeploy = true;
             break;
         }
@@ -394,10 +399,7 @@ Game.addHand = function (game, color) {
     var canPlayDeserter = false;
 
     for (i = 0; i < len1; i++) {
-        if (
-               game.flagList[i] === Index.NONE
-            && opponentPlayer.field[i].length > 0
-        ) {
+        if (game.flagList[i] === Index.NONE && opponentPlayer.field[i].length > 0) {
             canPlayDeserter = true;
             break;
         }
@@ -437,12 +439,11 @@ Game.addHand = function (game, color) {
         }
 
         if (
-               game.state === State.READY
-            || targetPlayer.uid === uid
-            || (
-                   game.active === color && game.playing === i
-                && (game.phase === Phase.REDEPLOY2 || game.phase === Phase.TRAITOR2)
-            )
+            game.state === State.READY ||
+            targetPlayer.uid === uid ||
+            (game.active === color &&
+                game.playing === i &&
+                (game.phase === Phase.REDEPLOY2 || game.phase === Phase.TRAITOR2))
         ) {
             frame = ((0xff00 & targetPlayer.hand[i]) >> 8) * 10 + (0x00ff & targetPlayer.hand[i]);
         } else {
@@ -453,100 +454,103 @@ Game.addHand = function (game, color) {
             }
         }
 
-        this.addSprite('view/card.png', frame, x, y, 65, 65, function () {
-            var _i = i;
+        this.addSprite(
+            'view/card.png',
+            frame,
+            x,
+            y,
+            65,
+            65,
+            (function () {
+                var _i = i;
 
-            if (
-                   game.state === State.PLAYING
-                && game.active === color
-                && targetPlayer.uid === uid
-            ) {
-                if (
-                       game.phase === Phase.STARTUP
-                    || game.phase === Phase.TROOP
-                    || game.phase === Phase.ALEXANDER
-                    || game.phase === Phase.DARIUS
-                    || game.phase === Phase.COMPANION
-                    || game.phase === Phase.SHIELD
-                    || game.phase === Phase.FOG
-                    || game.phase === Phase.MUD
-                    || game.phase === Phase.SCOUT1
-                    || game.phase === Phase.REDEPLOY1
-                    || game.phase === Phase.DESERTER
-                    || game.phase === Phase.TRAITOR1
-                ) {
-                    if ((targetPlayer.hand[i] & 0xff00) !== 0x0600) {
-                        if (canPlayTroop) {
-                            return function () {
-                                Game.send('f' + _i);
-                            };
+                if (game.state === State.PLAYING && game.active === color && targetPlayer.uid === uid) {
+                    if (
+                        game.phase === Phase.STARTUP ||
+                        game.phase === Phase.TROOP ||
+                        game.phase === Phase.ALEXANDER ||
+                        game.phase === Phase.DARIUS ||
+                        game.phase === Phase.COMPANION ||
+                        game.phase === Phase.SHIELD ||
+                        game.phase === Phase.FOG ||
+                        game.phase === Phase.MUD ||
+                        game.phase === Phase.SCOUT1 ||
+                        game.phase === Phase.REDEPLOY1 ||
+                        game.phase === Phase.DESERTER ||
+                        game.phase === Phase.TRAITOR1
+                    ) {
+                        if ((targetPlayer.hand[i] & 0xff00) !== 0x0600) {
+                            if (canPlayTroop) {
+                                return function () {
+                                    Game.send('f' + _i);
+                                };
+                            }
+                        } else if (targetPlayer.count <= opponentPlayer.count) {
+                            switch (targetPlayer.hand[i]) {
+                                case Tactics.ALEXANDER:
+                                case Tactics.DARIUS:
+                                    if (canPlayTroop && targetPlayer.leader === 0) {
+                                        return function () {
+                                            Game.send('f' + _i);
+                                        };
+                                    }
+                                    break;
+                                case Tactics.COMPANION:
+                                case Tactics.SHIELD:
+                                    if (canPlayTroop) {
+                                        return function () {
+                                            Game.send('f' + _i);
+                                        };
+                                    }
+                                    break;
+                                case Tactics.SCOUT:
+                                    if (game.troopDeck.length + game.tacticsDeck.length > 1) {
+                                        return function () {
+                                            Game.send('f' + _i);
+                                        };
+                                    }
+                                    break;
+                                case Tactics.FOG:
+                                case Tactics.MUD:
+                                    if (canPlayWeather) {
+                                        return function () {
+                                            Game.send('f' + _i);
+                                        };
+                                    }
+                                    break;
+                                case Tactics.REDEPLOY:
+                                    if (canPlayRedeploy) {
+                                        return function () {
+                                            Game.send('f' + _i);
+                                        };
+                                    }
+                                    break;
+                                case Tactics.DESERTER:
+                                    if (canPlayDeserter) {
+                                        return function () {
+                                            Game.send('f' + _i);
+                                        };
+                                    }
+                                    break;
+                                case Tactics.TRAITOR:
+                                    if (canPlayTraitor) {
+                                        return function () {
+                                            Game.send('f' + _i);
+                                        };
+                                    }
+                                    break;
+                            }
                         }
-                    } else if (targetPlayer.count <= opponentPlayer.count) {
-                        switch (targetPlayer.hand[i])
-                        {
-                            case Tactics.ALEXANDER:
-                            case Tactics.DARIUS:
-                                if (canPlayTroop && targetPlayer.leader === 0) {
-                                    return function () {
-                                        Game.send('f' + _i);
-                                    };
-                                }
-                                break;
-                            case Tactics.COMPANION:
-                            case Tactics.SHIELD:
-                                if (canPlayTroop) {
-                                    return function () {
-                                        Game.send('f' + _i);
-                                    };
-                                }
-                                break;
-                            case Tactics.SCOUT:
-                                if (game.troopDeck.length + game.tacticsDeck.length > 1) {
-                                    return function () {
-                                        Game.send('f' + _i);
-                                    };
-                                }
-                                break;
-                            case Tactics.FOG:
-                            case Tactics.MUD:
-                                if (canPlayWeather) {
-                                    return function () {
-                                        Game.send('f' + _i);
-                                    };
-                                }
-                                break;
-                            case Tactics.REDEPLOY:
-                                if (canPlayRedeploy) {
-                                    return function () {
-                                        Game.send('f' + _i);
-                                    };
-                                }
-                                break;
-                            case Tactics.DESERTER:
-                                if (canPlayDeserter) {
-                                    return function () {
-                                        Game.send('f' + _i);
-                                    };
-                                }
-                                break;
-                            case Tactics.TRAITOR:
-                                if (canPlayTraitor) {
-                                    return function () {
-                                        Game.send('f' + _i);
-                                    };
-                                }
-                                break;
-                        }
+                    } else if (game.phase === Phase.SCOUT3) {
+                        return function () {
+                            Game.send('k' + _i);
+                        };
                     }
-                } else if (game.phase === Phase.SCOUT3) {
-                    return function () {
-                        Game.send('k' + _i);
-                    };
                 }
-            }
-        } ());
+            })()
+        );
     }
-}
+};
 
 Game.score = function (weather, formation) {
     var k, l;
@@ -593,7 +597,7 @@ Game.score = function (weather, formation) {
 
     j = 0;
     for (i = 0; i < len1; i++) {
-        flush += (sample[i] & 0x00ff);
+        flush += sample[i] & 0x00ff;
         if ((sample[0] & 0xff00) === (sample[i] & 0xff00)) {
             j++;
         }
@@ -601,7 +605,7 @@ Game.score = function (weather, formation) {
 
     flush += leader * 9 + companion * 7 + shield * 2;
 
-    if ((j + leader + companion + shield) === formation.length) {
+    if (j + leader + companion + shield === formation.length) {
         isFlush = true;
     }
 
@@ -610,23 +614,23 @@ Game.score = function (weather, formation) {
 
     j = 0;
     for (i = 0; i < len1; i++) {
-        three += (sample[i] & 0x00ff);
+        three += sample[i] & 0x00ff;
         if ((sample[0] & 0x00ff) === (sample[i] & 0x00ff)) {
             j++;
         }
     }
 
-    if ((j + leader) === formation.length) {
+    if (j + leader === formation.length) {
         three += (sample[0] & 0x00ff) * leader;
         isThree = true;
     } else if (len1 > 0) {
         if ((sample[0] & 0x00ff) === 7) {
-            if ((j + leader + companion) === formation.length) {
+            if (j + leader + companion === formation.length) {
                 three += 7 * (leader + companion);
                 isThree = true;
             }
         } else if ((sample[0] & 0x00ff) === 0 || (sample[0] & 0x00ff) === 1 || (sample[0] & 0x00ff) === 2) {
-            if ((j + leader + shield) === formation.length) {
+            if (j + leader + shield === formation.length) {
                 three += (sample[0] & 0x00ff) * (leader + shield);
                 isThree = true;
             }
@@ -637,25 +641,27 @@ Game.score = function (weather, formation) {
     var straight = 0;
 
     if (len1 > 0) {
-        k = (sample[0] & 0x00ff);
-        l = (sample[len1 - 1] & 0x00ff);
+        k = sample[0] & 0x00ff;
+        l = sample[len1 - 1] & 0x00ff;
         straight += k;
         j = k;
         i = 1;
 
         while (i < len1) {
             if (j - 1 === (sample[i] & 0x00ff)) {
-                j = (sample[i] & 0x00ff);
+                j = sample[i] & 0x00ff;
                 straight += j;
                 i++;
             } else {
-                if (companion > 0 && j === 8) { // 最大が9でかつ援軍がある場合
+                if (companion > 0 && j === 8) {
+                    // 最大が9でかつ援軍がある場合
                     // 援軍を利用
                     companion--;
                     // 7（カードの表示数値は8)を加算
                     j -= 1;
                     straight += j;
-                } else if (shield > 0 && (j === 3 || j === 2 || j === 1)) { // 最大が4, 3, 2の場合で盾がある場合
+                } else if (shield > 0 && (j === 3 || j === 2 || j === 1)) {
+                    // 最大が4, 3, 2の場合で盾がある場合
                     // 盾を使う
                     shield--;
                     // 3,2,1のどれかで利用する
@@ -672,23 +678,28 @@ Game.score = function (weather, formation) {
             }
         }
 
-        if (isStraight && companion > 0) { // 援軍がまだ残っている場合（例えば[援軍, 7, 6]等)
+        if (isStraight && companion > 0) {
+            // 援軍がまだ残っている場合（例えば[援軍, 7, 6]等)
             if (k + 1 === 7) {
                 // 部隊カードの最大数値が7の場合, 7(部隊カードとしては8)を加算
                 k++;
                 straight += k;
-            } else if (k + 2 === 7 && leader >= 1) { // 隊長が残っている場合で、最大数値が6の場合[援軍、隊長、6]
+            } else if (k + 2 === 7 && leader >= 1) {
+                // 隊長が残っている場合で、最大数値が6の場合[援軍、隊長、6]
                 leader--;
                 k += 2;
                 straight += k + 6; // 援軍と隊長(6)を加算
-            } else if (k + 3 === 7 && leader >= 2) { // 隊長が2枚残っている場合で、最大値が5の場合[援軍(7)、隊長(6)、隊長(5)、5(4)] あり得る？？
+            } else if (k + 3 === 7 && leader >= 2) {
+                // 隊長が2枚残っている場合で、最大値が5の場合[援軍(7)、隊長(6)、隊長(5)、5(4)] あり得る？？
                 leader -= 2;
                 k += 3;
                 straight += k + 5 + 6; // 援軍と隊長(6)(5)を加算
-            } else if (l - 1 === 7) { // 最小が9の場合、[10, 9, 援軍]
+            } else if (l - 1 === 7) {
+                // 最小が9の場合、[10, 9, 援軍]
                 l--;
                 straight += l;
-            } else if (l - 2 === 7 && leader > 0) { // 最小が10で隊長を持っている場合、[10, 隊長, 援軍]
+            } else if (l - 2 === 7 && leader > 0) {
+                // 最小が10で隊長を持っている場合、[10, 隊長, 援軍]
                 leader--;
                 l -= 2;
                 straight += l + 8; // 援軍と隊長(8)を加算
@@ -697,21 +708,26 @@ Game.score = function (weather, formation) {
             }
         }
         if (isStraight && shield > 0) {
-            if (k + 1 === 1 || k + 1 === 2) { // 最大が1か2の場合、[盾, 2, 1], [盾, 1], [盾, 2]...
+            if (k + 1 === 1 || k + 1 === 2) {
+                // 最大が1か2の場合、[盾, 2, 1], [盾, 1], [盾, 2]...
                 k++;
                 straight += k;
-            } else if (k + 2 === 2 && leader >= 1) {  // 最大が1で隊長あり [1, 盾, 隊長]
+            } else if (k + 2 === 2 && leader >= 1) {
+                // 最大が1で隊長あり [1, 盾, 隊長]
                 leader--;
                 k += 2;
                 straight += k + 1;
-            } else if (l - 1 === 0 || l - 1 === 1 || l - 1 === 2) { // 最小が2, 3, 4 [3, 2, 盾],[4, 3, 盾],[5, 4, 盾]
+            } else if (l - 1 === 0 || l - 1 === 1 || l - 1 === 2) {
+                // 最小が2, 3, 4 [3, 2, 盾],[4, 3, 盾],[5, 4, 盾]
                 l--;
                 straight += l;
-            } else if (l - 2 === 2 && leader >= 1) { // 最小が5で隊長あり [盾, 隊長, 5], [6, 5, 盾, 隊長]
+            } else if (l - 2 === 2 && leader >= 1) {
+                // 最小が5で隊長あり [盾, 隊長, 5], [6, 5, 盾, 隊長]
                 leader--;
                 l -= 2;
                 straight += l + 3;
-            } else if (l - 3 === 2 && leader >= 2) { // 最小が6で隊長2以上 [6, 隊長, 隊長, 盾]
+            } else if (l - 3 === 2 && leader >= 2) {
+                // 最小が6で隊長2以上 [6, 隊長, 隊長, 盾]
                 leader -= 2;
                 l -= 3;
                 straight += l + 3 + 4;
@@ -764,7 +780,7 @@ Game.score = function (weather, formation) {
     }
 
     return flush;
-}
+};
 
 Game.maxScore = function (max, stock, weather, size, sample) {
     if (sample.length === size) {
@@ -777,21 +793,21 @@ Game.maxScore = function (max, stock, weather, size, sample) {
     var j;
     for (i = 0x0000; i < 0x0600; i += 0x0100) {
         for (j = 0x0009; j >= 0x0000; j -= 0x0001) {
-            if (stock[((i >> 8) * 10 + j)] !== -1) {
-                stock[((i >> 8) * 10 + j)] = -1;
+            if (stock[(i >> 8) * 10 + j] !== -1) {
+                stock[(i >> 8) * 10 + j] = -1;
                 sample.push(i | j);
                 score = Game.maxScore(max, stock, weather, size, sample);
                 if (score > max) {
                     max = score;
                 }
-                stock[((i >> 8) * 10 + j)] = j;
+                stock[(i >> 8) * 10 + j] = j;
                 sample.splice(sample.length - 1, 1);
             }
         }
     }
 
     return max;
-}
+};
 
 Game.maxScoreForNothing = function (game, weather, size) {
     var result = -1;
@@ -817,7 +833,7 @@ Game.maxScoreForNothing = function (game, weather, size) {
     } else {
         for (i = len1 - 1; i >= 0; i -= 10) {
             k = l = 0;
-            for (j = i; (i - j) < 10; j--) {
+            for (j = i; i - j < 10; j--) {
                 if (game.stock[j] !== -1) {
                     k += game.stock[j];
                     l++;
@@ -863,7 +879,7 @@ Game.maxScoreForNothing = function (game, weather, size) {
         for (i = len1 - 1; i >= 0; i -= 10) {
             k = l = 0;
 
-            for (j = i; (i - j) < 10; j--) {
+            for (j = i; i - j < 10; j--) {
                 if (game.stock[j] !== -1) {
                     k += game.stock[j];
                     l++;
@@ -930,7 +946,7 @@ Game.maxScoreForNothing = function (game, weather, size) {
     }
 
     return result;
-}
+};
 
 Game.addBattleLine = function (game) {
     var activePlayer = game.playerList[game.active];
@@ -951,52 +967,63 @@ Game.addBattleLine = function (game) {
             y = 263;
         }
 
-        this.addSprite('view/flag.png', 0, x, y, 65, 20, function () {
-            var _i = i;
+        this.addSprite(
+            'view/flag.png',
+            0,
+            x,
+            y,
+            65,
+            20,
+            (function () {
+                var _i = i;
 
-            if (
-                   game.state === State.PLAYING
-                && activePlayer.uid === uid
-            ) {
-                if (
-                    (
-                           game.phase === Phase.STARTUP
-                        || game.phase === Phase.TROOP
-                        || game.phase === Phase.SCOUT1
-                        || game.phase === Phase.REDEPLOY1
-                        || game.phase === Phase.DESERTER
-                        || game.phase === Phase.TRAITOR1
-                        || ( game.phase === Phase.DRAW && game.setup === Mode.BASIC)
-                    ) && activePlayer.field[i].length === game.size[i] && game.flagList[i] === -1
-                ) {
-                    activeScore = Game.score(game.weather[i], activePlayer.field[i]);
+                if (game.state === State.PLAYING && activePlayer.uid === uid) {
+                    if (
+                        (game.phase === Phase.STARTUP ||
+                            game.phase === Phase.TROOP ||
+                            game.phase === Phase.SCOUT1 ||
+                            game.phase === Phase.REDEPLOY1 ||
+                            game.phase === Phase.DESERTER ||
+                            game.phase === Phase.TRAITOR1 ||
+                            (game.phase === Phase.DRAW && game.setup === Mode.BASIC)) &&
+                        activePlayer.field[i].length === game.size[i] &&
+                        game.flagList[i] === -1
+                    ) {
+                        activeScore = Game.score(game.weather[i], activePlayer.field[i]);
 
-                    if (inactivePlayer.field[i].length > 0) {
-                        inactiveScore = Game.maxScore(-1, game.stock, game.weather[i], game.size[i], inactivePlayer.field[i]);
-                    } else {
-                        inactiveScore = Game.maxScoreForNothing(game, game.weather[i], game.size[i]);
-                    }
+                        if (inactivePlayer.field[i].length > 0) {
+                            inactiveScore = Game.maxScore(
+                                -1,
+                                game.stock,
+                                game.weather[i],
+                                game.size[i],
+                                inactivePlayer.field[i]
+                            );
+                        } else {
+                            inactiveScore = Game.maxScoreForNothing(game, game.weather[i], game.size[i]);
+                        }
 
-                    if (activeScore >= inactiveScore) {
-                        return function () {
-                            Game.send('e' + _i);
-                        };
-                    }
-                } else if (game.flagList[i] === -1) {
-                    if (game.phase === Phase.FOG) {
-                        return function () {
-                            Game.send('h' + _i);
-                        };
-                    } else if(game.phase === Phase.MUD) {
-                        return function () {
-                            Game.send('i' + _i);
-                        };
+                        if (activeScore >= inactiveScore) {
+                            return function () {
+                                Game.send('e' + _i);
+                            };
+                        }
+                    } else if (game.flagList[i] === -1) {
+                        if (game.phase === Phase.FOG) {
+                            return function () {
+                                Game.send('h' + _i);
+                            };
+                        } else if (game.phase === Phase.MUD) {
+                            return function () {
+                                Game.send('i' + _i);
+                            };
+                        }
                     }
                 }
-            }
-        } ());
+            })()
+        );
     }
-}
+};
 
 Game.addWeather = function (game) {
     var x;
@@ -1013,7 +1040,7 @@ Game.addWeather = function (game) {
             this.addSprite('view/flag.png', 2, x, 263, 65, 20);
         }
     }
-}
+};
 
 Game.addField = function (game, index) {
     var x;
@@ -1027,11 +1054,7 @@ Game.addField = function (game, index) {
     for (i = 0; i < len1; i++) {
         len2 = game.playerList[index].field[i].length;
         for (j = 0; j < len2; j++) {
-            if (
-                   game.before.idx === index
-                && game.before.y === i
-                && game.before.x === j
-            ) {
+            if (game.before.idx === index && game.before.y === i && game.before.x === j) {
                 x = i * 73 + 4;
 
                 if (index === 0) {
@@ -1051,53 +1074,54 @@ Game.addField = function (game, index) {
                 y = j * 30 + 284;
             }
 
-            frame = ((0xff00 & game.playerList[index].field[i][j]) >> 8) * 10 + (0x00ff & game.playerList[index].field[i][j]);
+            frame =
+                ((0xff00 & game.playerList[index].field[i][j]) >> 8) * 10 +
+                (0x00ff & game.playerList[index].field[i][j]);
 
-            this.addSprite('view/card.png', frame, x, y, 65, 65, function () {
-                if (
-                       game.state === State.PLAYING
-                    && game.playerList[game.active].uid === uid
-                    && game.flagList[i] === -1
-                ) {
-                    var _i = i;
-                    var _j = j;
+            this.addSprite(
+                'view/card.png',
+                frame,
+                x,
+                y,
+                65,
+                65,
+                (function () {
+                    if (
+                        game.state === State.PLAYING &&
+                        game.playerList[game.active].uid === uid &&
+                        game.flagList[i] === -1
+                    ) {
+                        var _i = i;
+                        var _j = j;
 
-                    if (game.active === index && game.phase === Phase.REDEPLOY1) {
-                        return function () {
-                            Game.send('l' + _i + ' ' + _j);
-                        };
-                    } else if (game.active !== index) {
-                        if (game.phase === Phase.DESERTER) {
+                        if (game.active === index && game.phase === Phase.REDEPLOY1) {
                             return function () {
-                                Game.send('n' + _i + ' ' + _j);
+                                Game.send('l' + _i + ' ' + _j);
                             };
-                        } else if (
-                               game.phase === Phase.TRAITOR1
-                            && (game.playerList[index].field[i][j] & 0xff00) !== 0x0600
-                        ) {
-                            return function () {
-                                Game.send('o' + _i + ' ' + _j);
-                            };
+                        } else if (game.active !== index) {
+                            if (game.phase === Phase.DESERTER) {
+                                return function () {
+                                    Game.send('n' + _i + ' ' + _j);
+                                };
+                            } else if (
+                                game.phase === Phase.TRAITOR1 &&
+                                (game.playerList[index].field[i][j] & 0xff00) !== 0x0600
+                            ) {
+                                return function () {
+                                    Game.send('o' + _i + ' ' + _j);
+                                };
+                            }
                         }
                     }
-                }
-            } ());
+                })()
+            );
 
-            if (
-                   game.state === State.PLAYING
-                && game.target.y === i
-                && game.target.x === j
-            ) {
+            if (game.state === State.PLAYING && game.target.y === i && game.target.x === j) {
                 x = i * 73 + 7;
 
                 if (
-                    (
-                           game.active === index
-                        && game.phase === Phase.REDEPLOY2
-                    ) || (
-                           game.active !== index
-                        && game.phase === Phase.TRAITOR2
-                    )
+                    (game.active === index && game.phase === Phase.REDEPLOY2) ||
+                    (game.active !== index && game.phase === Phase.TRAITOR2)
                 ) {
                     if (index === 0) {
                         y = 197 - j * 30;
@@ -1110,7 +1134,7 @@ Game.addField = function (game, index) {
             }
         }
     }
-}
+};
 
 Game.addTouch = function (game) {
     var x;
@@ -1118,39 +1142,41 @@ Game.addTouch = function (game) {
     var i;
     var len1 = game.flagList.length;
 
-    if (
-           game.state === State.PLAYING
-        && game.playerList[game.active].uid === uid
-    ) {
+    if (game.state === State.PLAYING && game.playerList[game.active].uid === uid) {
         if (
-               game.phase === Phase.TROOP
-            || game.phase === Phase.ALEXANDER
-            || game.phase === Phase.DARIUS
-            || game.phase === Phase.COMPANION
-            || game.phase === Phase.SHIELD
-            || game.phase === Phase.TRAITOR2
+            game.phase === Phase.TROOP ||
+            game.phase === Phase.ALEXANDER ||
+            game.phase === Phase.DARIUS ||
+            game.phase === Phase.COMPANION ||
+            game.phase === Phase.SHIELD ||
+            game.phase === Phase.TRAITOR2
         ) {
             for (i = 0; i < len1; i++) {
                 x = i * 73 + 7;
                 y = game.active * 174 + 106;
 
-                if (
-                       game.flagList[i] === Index.NONE
-                    && game.playerList[game.active].field[i].length < game.size[i]
-                ) {
-                    this.addSprite('view/touch.png', 0, x, y, 65, 160, function () {
-                        var _i = i;
+                if (game.flagList[i] === Index.NONE && game.playerList[game.active].field[i].length < game.size[i]) {
+                    this.addSprite(
+                        'view/touch.png',
+                        0,
+                        x,
+                        y,
+                        65,
+                        160,
+                        (function () {
+                            var _i = i;
 
-                        if (game.phase === Phase.TRAITOR2) {
-                            return function () {
-                                Game.send('p' + _i);
-                            };
-                        } else {
-                            return function () {
-                                Game.send('g' + _i);
-                            };
-                        }
-                    } ());
+                            if (game.phase === Phase.TRAITOR2) {
+                                return function () {
+                                    Game.send('p' + _i);
+                                };
+                            } else {
+                                return function () {
+                                    Game.send('g' + _i);
+                                };
+                            }
+                        })()
+                    );
                 }
             }
         } else if (game.phase === Phase.REDEPLOY2) {
@@ -1159,70 +1185,92 @@ Game.addTouch = function (game) {
                 y = game.active * 174 + 106;
 
                 if (
-                       game.flagList[i] === Index.NONE
-                    && game.target.y !== i
-                    && game.playerList[game.active].field[i].length < game.size[i]
+                    game.flagList[i] === Index.NONE &&
+                    game.target.y !== i &&
+                    game.playerList[game.active].field[i].length < game.size[i]
                 ) {
-                    this.addSprite('view/touch.png', 0, x, y, 65, 160, function () {
-                        var _i = i;
+                    this.addSprite(
+                        'view/touch.png',
+                        0,
+                        x,
+                        y,
+                        65,
+                        160,
+                        (function () {
+                            var _i = i;
 
-                        return function () {
-                            Game.send('m' + _i);
-                        };
-                    } ());
+                            return function () {
+                                Game.send('m' + _i);
+                            };
+                        })()
+                    );
                 }
             }
         }
     }
-}
+};
 
 Game.addTroopDeck = function (game) {
     this.addSprite('view/card.png', 70, 664, 476, 65, 65);
 
     Game.addLabel(game.troopDeck.length + '枚', 669, 481);
 
-    this.addSprite('view/card.png', 72, 664, 476, 65, 65, function () {
-        if (
-               game.state === State.PLAYING
-            && game.playerList[game.active].uid === uid
-            && game.troopDeck.length > 0
-        ) {
-            if (game.phase === Phase.DRAW) {
-                return function () {
-                    Game.send('q' + Card.TROOP);
-                };
-            } else if (game.phase === Phase.SCOUT1 || game.phase === Phase.SCOUT2) {
-                return function () {
-                    Game.send('j' + Card.TROOP);
-                };
+    this.addSprite(
+        'view/card.png',
+        72,
+        664,
+        476,
+        65,
+        65,
+        (function () {
+            if (game.state === State.PLAYING && game.playerList[game.active].uid === uid && game.troopDeck.length > 0) {
+                if (game.phase === Phase.DRAW) {
+                    return function () {
+                        Game.send('q' + Card.TROOP);
+                    };
+                } else if (game.phase === Phase.SCOUT1 || game.phase === Phase.SCOUT2) {
+                    return function () {
+                        Game.send('j' + Card.TROOP);
+                    };
+                }
             }
-        }
-    } (), 0);
-}
+        })(),
+        0
+    );
+};
 
 Game.addTacticsDeck = function (game) {
     this.addSprite('view/card.png', 71, 731, 476, 65, 65);
 
     Game.addLabel(game.tacticsDeck.length + '枚', 736, 481);
 
-    this.addSprite('view/card.png', 72, 731, 476, 65, 65, function () {
-        if (
-               game.state === State.PLAYING
-            && game.playerList[game.active].uid === uid
-            && game.tacticsDeck.length > 0
-        ) {
-            if (game.phase === Phase.DRAW) {
-                return function () {
-                    Game.send('q' + Card.TACTICS);
-                };
-            } else if (game.phase === Phase.SCOUT1 || game.phase === Phase.SCOUT2) {
-                return function () {
-                    Game.send('j' + Card.TACTICS);
-                };
+    this.addSprite(
+        'view/card.png',
+        72,
+        731,
+        476,
+        65,
+        65,
+        (function () {
+            if (
+                game.state === State.PLAYING &&
+                game.playerList[game.active].uid === uid &&
+                game.tacticsDeck.length > 0
+            ) {
+                if (game.phase === Phase.DRAW) {
+                    return function () {
+                        Game.send('q' + Card.TACTICS);
+                    };
+                } else if (game.phase === Phase.SCOUT1 || game.phase === Phase.SCOUT2) {
+                    return function () {
+                        Game.send('j' + Card.TACTICS);
+                    };
+                }
             }
-        }
-    } (), 0);
-}
+        })(),
+        0
+    );
+};
 
 Game.addTalon = function (game, index) {
     var x;
@@ -1239,4 +1287,4 @@ Game.addTalon = function (game, index) {
 
         this.addSprite('view/card.png', frame, x, y, 65, 65);
     }
-}
+};
